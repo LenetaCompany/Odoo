@@ -9,6 +9,8 @@
     "category": "Base",
     "summary": "Print partner labels",
     "depends": ["base_setup"],
-    "data": ["views/base_config_settings.xml", "reports/res_partner.xml"],
+    "data": ["views/base_config_settings.xml", 
+            # "reports/res_partner.xml"
+            ],
     "installable": True,
 }
