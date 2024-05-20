@@ -18,12 +18,16 @@ class ItemInventoryReportWizard(models.TransientModel):
 
     @api.onchange('start_date')
     def onchange_start_date(self):
-        if not self.end_date and  self.start_date:
-            self.end_date  = self.start_date + relativedelta(months=12, days=-1)
+        if self.start_date:
+
+            self.end_date  = self.start_date+ relativedelta(years=1,days=-1)
+            # self.end_date  = self.start_date + relativedelta(months=12, days=-1)
     @api.onchange('end_date')
     def onchange_end_date(self):
-        if  not self.end_date:
-            self.start_date  = self.end_date - relativedelta(months=-12, days=1)
+        if  self.end_date:
+            # self.start_date  = self.end_date + relativedelta(months=-12, days=1)
+            self.start_date  = self.end_date + relativedelta(years=-1,days=1)
+            # self.start_date  = self.end_date + relativedelta(months=-12, days=1)
 
 # end date should be greater than start date
 # end date shouldn't be exceed from current date.
