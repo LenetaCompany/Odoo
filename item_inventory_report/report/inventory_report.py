@@ -40,23 +40,23 @@ class ItemInventoryReportDocuments(models.AbstractModel):
 
 
 
-            in_move_lines = self.env['stock.move.line'].search(
+            move_lines = self.env['stock.move.line'].search(
                 ["&", ("product_id", "=", product.id),
                  "&", ("date", ">=", "2010-11-30 19:00:00"),
                       ("date", "<=", end_date+timedelta(hours=59, minutes=59, seconds=59)),
 
                  ])
 
-            out_move_lines = self.env['stock.move.line'].search(
-                ["&", ("product_id", "=", product.id),
-                 "&", ("date", ">=", "2016-11-30 19:00:00"),
-                      ("date", "<=", end_date+timedelta(hours=59, minutes=59, seconds=59))])
+            # out_move_lines = self.env['stock.move.line'].search(
+            #     ["&", ("product_id", "=", product.id),
+            #      "&", ("date", ">=", "2016-11-30 19:00:00"),
+            #           ("date", "<=", end_date+timedelta(hours=59, minutes=59, seconds=59))])
 
 
-            w01_in = sum(in_move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
-            w01_out = sum(out_move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id).mapped('qty_done'))
-            w02_in = sum(in_move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
-            w02_out = sum(out_move_lines.filtered(lambda x: x.location_id.id == location_ids[0].id).mapped('qty_done'))
+            w01_in = sum(move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
+            w01_out = sum(move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id).mapped('qty_done'))
+            w02_in = sum(move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
+            w02_out = sum(move_lines.filtered(lambda x: x.location_id.id == location_ids[0].id).mapped('qty_done'))
 
             warehouse1_qty= w01_in - w01_out
             warehouse2_qty= w02_in - w02_out
