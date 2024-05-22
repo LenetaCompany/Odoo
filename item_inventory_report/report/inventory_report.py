@@ -3,9 +3,9 @@ from odoo import models, fields, api
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-import datetime
 import calendar
 from odoo.exceptions import UserError
+from datetime import datetime, timedelta
 
 
 class ItemInventoryReportDocuments(models.AbstractModel):
@@ -18,9 +18,9 @@ class ItemInventoryReportDocuments(models.AbstractModel):
         end_date = False
 
         if data['start_date']:
-            start_date = datetime.datetime.strptime(str(data['start_date']), '%Y-%m-%d').date()
+            start_date = datetime.strptime(str(data['start_date']), '%Y-%m-%d').date()
         if data['end_date']:
-            end_date = datetime.datetime.strptime(str(data['end_date']), '%Y-%m-%d').date()
+            end_date = datetime.strptime(str(data['end_date']), '%Y-%m-%d').date()
         data_dict = []
 
         product_ids = self.env['product.product'].with_context(from_date=start_date, to_date=end_date).browse(
@@ -30,17 +30,63 @@ class ItemInventoryReportDocuments(models.AbstractModel):
 
         for product in product_ids:
             default_code = product.default_code
+
+            # move_lines= self.env['stock.move.line'].search([("product_id", "=", product.id),
+            #  ('date', '>=', '2016-11-30 19:00:00'),
+            #  ('date', '<=', data['end_date']),('state','=','done')])
+
             location_ids = self.env['stock.location'].search([('usage', '=', 'internal')], limit=2)
-            move_lines = self.env['stock.move.line'].search([('date', '>=', data['start_date']), ('date', '<=', data['end_date']),
-                                                  ('product_id','=',product.id),('state','=','done')])
-            warehouse1_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
-            warehouse1_out_qty = sum(move_lines.filtered(lambda x:x.location_id.id == location_ids[1].id).mapped('qty_done'))
 
-            warehouse2_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
-            warehouse2_out_qty = sum(move_lines.filtered(lambda x:x.location_id.id == location_ids[0].id).mapped('qty_done'))
 
-            warehouse1_qty = warehouse1_in_qty - warehouse1_out_qty
-            warehouse2_qty = warehouse2_in_qty - warehouse2_out_qty
+
+
+            in_move_lines = self.env['stock.move.line'].search(
+                ["&", ("product_id", "=", product.id),
+                 "&", ("date", ">=", "2010-11-30 19:00:00"),
+                      ("date", "<=", end_date+timedelta(hours=59, minutes=59, seconds=59)),
+
+                 ])
+
+            out_move_lines = self.env['stock.move.line'].search(
+                ["&", ("product_id", "=", product.id),
+                 "&", ("date", ">=", "2016-11-30 19:00:00"),
+                      ("date", "<=", end_date+timedelta(hours=59, minutes=59, seconds=59))])
+
+
+            w01_in = sum(in_move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
+            w01_out = sum(out_move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id).mapped('qty_done'))
+            w02_in = sum(in_move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
+            w02_out = sum(out_move_lines.filtered(lambda x: x.location_id.id == location_ids[0].id).mapped('qty_done'))
+
+            warehouse1_qty= w01_in - w01_out
+            warehouse2_qty= w02_in - w02_out
+
+        # past_warehouse1_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
+
+
+            # move_lines = self.env['stock.move.line'].search([('date', '>=', data['start_date']), ('date', '<=', data['end_date']),
+            #                                       ('product_id','=',product.id),('state','=','done')])
+            #
+            #
+            # past_move_lines = self.env['stock.move.line'].search([('date', '<', data['start_date']),
+            #                                                       ('product_id', '=', product.id),
+            #                                                       ('state', '=', 'done')])
+            #
+            # past_warehouse1_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
+            # past_warehouse1_out_qty = sum(move_lines.filtered(lambda x:x.location_id.id == location_ids[1].id).mapped('qty_done'))
+            #
+            # past_warehouse2_in_qty = sum(past_move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
+            # past_warehouse2_out_qty = sum(past_move_lines.filtered(lambda x:x.location_id.id == location_ids[0].id).mapped('qty_done'))
+            #
+            #
+            # warehouse1_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[1].id).mapped('qty_done'))
+            # warehouse1_out_qty = sum(move_lines.filtered(lambda x:x.location_id.id == location_ids[1].id).mapped('qty_done'))
+            #
+            # warehouse2_in_qty = sum(move_lines.filtered(lambda x:x.location_dest_id.id == location_ids[0].id).mapped('qty_done'))
+            # warehouse2_out_qty = sum(move_lines.filtered  (lambda x:x.location_id.id == location_ids[0].id).mapped('qty_done'))
+            #
+            # warehouse1_qty = past_warehouse1_in_qty+ warehouse1_in_qty - past_warehouse1_out_qty - warehouse1_out_qty
+            # warehouse2_qty = past_warehouse2_in_qty + warehouse2_in_qty -  past_warehouse2_out_qty- warehouse2_out_qty
 
             available_qty = warehouse1_qty + warehouse2_qty
 
