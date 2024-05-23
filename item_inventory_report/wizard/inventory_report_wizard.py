@@ -13,7 +13,11 @@ class ItemInventoryReportWizard(models.TransientModel):
 
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="Inventory At Date",required=True)
-    type = fields.Selection([('all_products','All Products'),('specific_products','Specific Products')],default="all_products",string="Type",required=True)
+    type = fields.Selection([('all_products','All Products'),
+                             ('specific_products','Specific Products'),
+                             ('special_products','Special Products'),
+                             ('standard_products','Standard Products')],
+                            default="all_products",string="Type",required=True)
     product_ids = fields.Many2many('product.product', string='Products')
 
     @api.onchange('start_date')
@@ -47,8 +51,15 @@ class ItemInventoryReportWizard(models.TransientModel):
 
         if self.type == 'all_products':
             product_ids = self.env['product.product'].search([])
+
+        elif self.type == 'standard_products':
+            product_ids = self.env['product.product'].search([('x_studio_stdspc','=','STD')])
+
+        elif self.type == 'special_products':
+            product_ids = self.env['product.product'].search([('x_studio_stdspc','=','SPC')])
         else:
             product_ids = self.product_ids
+
 
 
         data.update({'start_date': self.start_date, 'end_date': self.end_date,'product_ids':product_ids.ids})
