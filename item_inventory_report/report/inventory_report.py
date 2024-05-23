@@ -92,7 +92,7 @@ class ItemInventoryReportDocuments(models.AbstractModel):
 
             qty_sold_last_12_mo = sum(self.env['sale.report'].search(
                 [('date', '>=', data['start_date']), ('date', '<=', data['end_date']),
-                 ('product_id', '=', product.id)]).mapped('product_uom_qty'))
+                 ('product_id', '=', product.id),('state', 'not in', ['draft', 'cancel', 'sent'])]).mapped('product_uom_qty'))
 
             avg_use_per_month = round(qty_sold_last_12_mo / 12, 2)
 

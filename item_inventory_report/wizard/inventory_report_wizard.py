@@ -11,8 +11,8 @@ class ItemInventoryReportWizard(models.TransientModel):
     _name = "item.inventory.report.wizard"
     _description = "Item Inventory Report Wizard"
 
-    start_date = fields.Date(string="Start Date",required=True)
-    end_date = fields.Date(string="End Date",required=True)
+    start_date = fields.Date(string="Start Date")
+    end_date = fields.Date(string="Inventory At Date",required=True)
     type = fields.Selection([('all_products','All Products'),('specific_products','Specific Products')],default="all_products",string="Type",required=True)
     product_ids = fields.Many2many('product.product', string='Products')
 

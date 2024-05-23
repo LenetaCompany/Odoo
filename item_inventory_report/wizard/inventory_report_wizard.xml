@@ -9,7 +9,7 @@
                 <sheet string="Item Inventory Report">
                     <group>
                         <group>
-                            <field name="start_date" />
+                            <field name="start_date" invisible="1"/>
                             <field name="type" widget="radio"/>
                             <field name="product_ids" attrs="{'invisible':[('type','!=','specific_products')],'required':[('type','=','specific_products')]}" widget="many2many_tags"/>
                         </group>
