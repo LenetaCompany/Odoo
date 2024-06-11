@@ -7,6 +7,7 @@
     'website': 'https://comstarusa.com',
     'depends': ['base','product','stock', 'sale_management'],
     'data': [
+        # 'data/data.xml',
         'security/ir.model.access.csv',
         'wizard/inventory_report_wizard.xml',
         'report/inventory_report.xml',
