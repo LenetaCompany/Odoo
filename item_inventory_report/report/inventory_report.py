@@ -43,13 +43,26 @@ class ItemInventoryReportDocuments(models.AbstractModel):
             w01_out = sum(
                 move_lines.filtered(lambda x: x.location_id.id == location_ids[0].id and x.state == 'done').mapped(
                     'qty_done'))
-            w02_in = sum(
-                move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[1].id and x.state == 'done').mapped(
-                    'qty_done'))
-            w02_out = sum(
-                move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id and x.state == 'done').mapped(
-                    'qty_done'))
-
+            # w02_in = sum(
+            #     move_lines.filtered(lambda x: x.location_dest_id.id == location_ids[1].id and x.state == 'done').mapped(
+            #         'qty_done'))
+            if len(location_ids) > 1:
+                w02_in = sum(
+                    move_lines.filtered(
+                        lambda x: x.location_dest_id.id == location_ids[1].id and x.state == 'done'
+                    ).mapped('qty_done')
+                )
+            else:
+                w02_in = 0
+            # w02_out = sum(
+            #     move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id and x.state == 'done').mapped(
+            #         'qty_done'))
+            if len(location_ids) > 1:
+                w02_out = sum(
+                        move_lines.filtered(lambda x: x.location_id.id == location_ids[1].id and x.state == 'done').mapped(
+                            'qty_done'))
+            else:
+                w02_out = 0
             warehouse1_qty = w01_in - w01_out
             warehouse2_qty = w02_in - w02_out
 

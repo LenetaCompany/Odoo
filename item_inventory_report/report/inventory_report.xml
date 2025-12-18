@@ -1,177 +1,306 @@
-<?xml version="1.0"?>
+
 <odoo>
 
-    <template id="external_custom_layout_boxed">
-<!--        <div t-attf-class="header o_company_#{env.company.id}_layout" t-att-style="report_header_style">-->
-<!--            <div class="o_boxed_header">-->
-<!--            <div class="row mb8">-->
-<!--                <div class="col-6">-->
-<!--                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo"/>-->
-<!--                </div>-->
-<!--                <div class="col-6 text-end mb4">-->
-<!--                    <div class="mt0 h4" t-field="company.report_header"/>-->
-<!--                    <div name="company_address" class="float-end mb4">-->
-<!--                        <ul class="list-unstyled">-->
-<!--                            <li t-if="company.is_company_details_empty"><t t-esc="company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/></li>-->
-<!--                            <li t-else=""><t t-esc="company.company_details"/></li>-->
-<!--                            <li t-if="forced_vat">-->
-<!--                                <t t-esc="company.country_id.vat_label or 'Tax ID'"/>:-->
-<!--                                <span t-esc="forced_vat"/>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+
+    <!-- Custom External Layout -->
+         <template id="external_custom_layout_boxed">
+    <div class="o_report_layout_boxed">
+        <div class="o_report_header">
+            <t t-if="env.company.logo">
+                <img t-att-src="image_data_uri(env.company.logo)" style="max-height: 100px; max-width: 200px;"/>
+            </t>
+        </div>
+<!--        <div class="o_report_body">-->
+<!--            <t t-raw="0"/>-->
+<!--        </div>-->
+    </div>
+<!--    <div class="o_report_footer">-->
+<!--        <div class="text-right">-->
+<!--            <span t-if="report_type == 'pdf'">Page <span class="page"/> / <span class="topage"/></span>-->
+<!--        </div>-->
+<!--    </div>-->
+</template>
+
+
+
+
+
+
+<!--      <template id="external_custom_layout_boxed">-->
+<!--    <div class="o_report_layout_boxed">-->
+<!--        <div class="o_report_header">-->
+<!--&lt;!&ndash;            <t t-if="env.company.logo">&ndash;&gt;-->
+<!--&lt;!&ndash;                <img t-att-src="image_data_uri(env.company.logo)" style="max-height: 100px; max-width: 200px;"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </t>&ndash;&gt;-->
+<!--        </div>-->
+<!--&lt;!&ndash;        <div class="o_report_body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <t t-raw="0"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--    <div class="o_report_footer">-->
+<!--&lt;!&ndash;        <div class="text-right">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span t-if="report_type == 'pdf'">Page <span class="page"/> / <span class="topage"/></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--</template>-->
+
+<!--&lt;!&ndash;Template 1&ndash;&gt;-->
+<!--<template id="external_custom_layout_boxed">-->
+<!--    <div t-att-class="'article o_report_layout_boxed o_company_%s_layout' % env.company.id + (' o_report_layout_background' if env.company.layout_background in ['Geometric', 'Custom'] else '')"-->
+<!--         t-att-style="('background-image: url(data:image/png;base64,%s);' % env.company.layout_background_image.decode('utf-8')) if env.company.layout_background_image and env.company.layout_background == 'Custom' else ('background-image: url(/base/static/img/bg_background_template.jpg);' if env.company.layout_background == 'Geometric' else '')">-->
+<!--        <div class="pt-5">-->
+<!--            <t t-call="web.address_layout"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div t-att-class="'footer o_clean_footer o_company_%s_layout' % env.company.id">-->
+<!--        <div class="row">-->
+<!--            <div class="col-11"/>-->
+<!--            <div class="col-1">-->
+<!--                <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-end text-center">-->
+<!--                    <li class="list-inline-item"><strong><span class="page"/></strong></li>-->
+<!--                </ul>-->
 <!--            </div>-->
 <!--        </div>-->
+<!--    </div>-->
+<!--</template>-->
 
-        <div t-attf-class="article o_report_layout_boxed o_company_#{env.company.id}_layout {{  'o_report_layout_background' if env.company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % env.company.layout_background_image.decode('utf-8') if env.company.layout_background_image and env.company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if env.company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <div class="pt-5">
-                <!-- This div ensures that the address is not cropped by the header. -->
-                <t t-call="web.address_layout"/>
-            </div>
-            <t t-out="0"/>
-        </div>
-
-<!--        <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">-->
-<!--            <div class="text-center">-->
-<!--                <div t-field="company.report_footer"/>-->
-<!--                <div t-if="report_type == 'pdf'">-->
-<!--                    Page: <span class="page"/> / <span class="topage"/>-->
-<!--                </div>-->
-<!--                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">-->
-<!--                    <span t-field="o.name"/>-->
-<!--                </div>-->
-<!--            </div>-->
+<!--&lt;!&ndash;  Template 2  &ndash;&gt;-->
+<!--      <template id="external_custom_layout_boxed">-->
+<!--    <div class="o_report_layout_boxed">-->
+<!--        <div class="o_report_header">-->
+<!--            <t t-if="env.company.logo">-->
+<!--                <img t-att-src="image_data_uri(env.company.logo)" style="max-height: 100px; max-width: 200px;"/>-->
+<!--            </t>-->
 <!--        </div>-->
-        <div t-attf-class="footer o_clean_footer o_company_#{env.company.id}_layout">
-            <div class="row">
-                <div class="col-11"/>
+<!--        <div class="o_report_body">-->
+<!--            <t t-raw="0"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="o_report_footer">-->
+<!--        <div class="text-right">-->
+<!--            <span t-if="report_type == 'pdf'">Page <span class="page"/> / <span class="topage"/></span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</template>-->
 
-<!--                <div class="col-4">-->
-<!--                    <span t-field="env.company.report_footer"/>-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <span t-if="env.company.is_company_details_empty" t-field="env.company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>-->
-<!--                    <span t-else="" t-field="env.company.company_details"/>-->
-<!--                </div>-->
-<!--                <div class="col-3">-->
-<!--                    <div class="mt0 mb0 h5" t-field="env.company.report_header"/>-->
-<!--                </div>-->
-                <div class="col-1">
-                    <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-end text-center">
-                        <li class="list-inline-item"><strong><span class="page"/></strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </template>
+    <!-- Custom Layout Template -->
 
 
-
+    <!-- Inventory Report Template -->
     <template id="inventory_report_template">
         <t t-call="web.html_container">
-            <div class="oe_structure"/>
-            <t t-call="item_inventory_report.external_custom_layout_boxed">
+<!--            <t t-call="item_inventory_report.external_custom_layout_boxed"/>-->
 
-                <div class="row" style="margin-top:-40px;">
-                    <div class="col-3">
-                        <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo" style="max-height:100px; max-width: 90%; width:auto"/>
-                    </div>
-                    <div class="col-9" style="margin-top:20px; font-family:calibri;font-size:18px;">
-                        <strong>Item Inventory Report for the period from
-                            <span t-esc="start_date.strftime('%m/%d/%Y')"/>
+            <div class="row mt-2">
+                <div class="col-3">
+                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo"
+                         style="max-height:100px; max-width:90%; width:auto"/>
+                </div>
+                <div class="col-9" style="font-family:Calibri; font-size:18px; margin-top:20px;">
+                    <strong>Item Inventory Report for the period from
+                        <span t-esc="start_date.strftime('%m/%d/%Y')"/>
                         to
-                            <span t-esc="end_date.strftime('%m/%d/%Y')"/>
-                        </strong>
-                    </div>
+                        <span t-esc="end_date.strftime('%m/%d/%Y')"/>
+                    </strong>
                 </div>
-                <br/>
-                    <div class="page container-fluid" style="font-family:calibri; font-size:12px;">
+            </div>
 
-                    <div class="oe_structure"/>
-                    <div class="row">
-                        <table class="table table-sm table-striped" >
-                            <thead>
-                                <tr style="background-color:#D3D3D3;">
-                                    <th>Product Code</th>
-                                    <th>Available</th>
-                                    <th>W 01</th>
-                                    <th>W 02</th>
-                                    <th>Qty Sold Last 12 Mos</th>
-                                    <th>Avg Use Per Mo</th>
-                                    <th>Months of Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="docs" t-as="item">
-                                    <t t-if="item['months_of_stock'] &lt;= 6 and item['months_of_stock'] &gt; 0">
-                                        <td style="background-color:#FFFF00;">
-                                            <t t-esc="item['default_code']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['available_qty']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['warehouse1_qty']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['warehouse2_qty']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['qty_sold_last_12_mo']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['avg_use_per_month']"/>
-                                        </td>
-                                        <td class="text-center" style="background-color:#FFFF00;">
-                                            <t t-esc="item['months_of_stock']"/>
-                                        </td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>
-                                            <t t-esc="item['default_code']"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <t t-esc="item['available_qty']"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <t t-esc="item['warehouse1_qty']"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <t t-esc="item['warehouse2_qty']"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <t t-esc="item['qty_sold_last_12_mo']"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <t t-esc="item['avg_use_per_month']"/>
-                                        </td>
+            <br/>
 
-                                        <td class="text-center">
-                                             <t t-if="item['months_of_stock'] == 0 and
-                                                    item['available_qty'] == 0and
-                                                    item['warehouse1_qty'] == 0 and
-                                                    item['warehouse2_qty'] == 0  and
-                                                    item['qty_sold_last_12_mo'] == 0  and
-                                                    item['avg_use_per_month']== 0">
-                                                <t t-esc="'N/A'"/>
-                                             </t>
+            <div class="page" style="font-family:Calibri; font-size:12px; page-break-after:auto;">
+                <style>
+                    table { width: 100%; border-collapse: collapse; }
+                    th, td { padding: 4px; border: 1px solid #ddd; font-size: 12px; }
+                    tr { page-break-inside: avoid; }
+                    thead { display: table-header-group; }  /* Repeat header on new page */
+                    tfoot { display: table-footer-group; }
+                </style>
 
-                                            <t t-else="">
-                                                <t t-esc="item['months_of_stock']"/>
-                                            </t>
-                                        </td>
-                                    </t>
-                                </tr>
-                            </tbody>
-                        </table>
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr style="background-color:#D3D3D3;">
+                            <th>Product Code</th>
+                            <th>Available</th>
+                            <th>W 01</th>
+                            <th>W 02</th>
+                            <th>Qty Sold Last 12 Mos</th>
+                            <th>Avg Use Per Mo</th>
+                            <th>Months of Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    <!-- row counter -->
+    <t t-set="row_index" t-value="0"/>
 
-                    </div>
-                </div>
-            </t>
+    <tr t-foreach="docs" t-as="item">
+        <t t-set="row_index" t-value="row_index + 1"/>
+
+        <!-- alternate background -->
+        <t t-set="bg_color" t-value="'#F2F2F2' if row_index % 2 == 0 else '#FFFFFF'"/>
+
+        <!-- Yellow rows for low stock -->
+        <t t-if="item['months_of_stock'] &lt;= 6 and item['months_of_stock'] &gt; 0">
+            <td style="background-color:#FFFF00;">
+                <t t-esc="item.get('default_code') or '-'"/>
+            </td>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['available_qty']"/>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse1_qty']"/>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse2_qty']"/>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['qty_sold_last_12_mo']"/>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['avg_use_per_month']"/>
+            <td class="text-center" style="background-color:#FFFF00;" t-esc="item['months_of_stock']"/>
+        </t>
+
+        <!-- Normal alternate rows -->
+        <t t-else="">
+            <td t-att-style="'background-color:%s' % bg_color">
+                <t t-esc="item.get('default_code') or '-'"/>
+            </td>
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color" t-esc="item['available_qty']"/>
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color" t-esc="item['warehouse1_qty']"/>
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color" t-esc="item['warehouse2_qty']"/>
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color" t-esc="item['qty_sold_last_12_mo']"/>
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color" t-esc="item['avg_use_per_month']"/>
+
+            <td class="text-center" t-att-style="'background-color:%s' % bg_color">
+                <t t-if="item['months_of_stock'] == 0
+                    and item['available_qty'] == 0
+                    and item['warehouse1_qty'] == 0
+                    and item['warehouse2_qty'] == 0
+                    and item['qty_sold_last_12_mo'] == 0
+                    and item['avg_use_per_month'] == 0">
+                    N/A
+                </t>
+                <t t-else="" t-esc="item['months_of_stock']"/>
+            </td>
+        </t>
+
+    </tr>
+</tbody>
+
+
+
+<!--                    <tbody>-->
+<!--                        <tr t-foreach="docs" t-as="item">-->
+<!--                            <t t-if="item['months_of_stock'] &lt;= 6 and item['months_of_stock'] &gt; 0">-->
+<!--&lt;!&ndash;                                <td style="background-color:#FFFF00;" t-esc="item['default_code']"/>&ndash;&gt;-->
+<!--                                <td style="background-color:#FFFF00;">-->
+<!--                                    <t t-esc="item.get('default_code') or '-'"/>-->
+<!--                                </td>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['available_qty']"/>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse1_qty']"/>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse2_qty']"/>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['avg_use_per_month']"/>-->
+<!--                                <td class="text-center" style="background-color:#FFFF00;" t-esc="item['months_of_stock']"/>-->
+<!--                            </t>-->
+<!--                            <t t-else="">-->
+<!--&lt;!&ndash;                                <td t-esc="item['default_code']"/>&ndash;&gt;-->
+<!--                                <td>-->
+<!--                                    <t t-esc="item.get('default_code') or '-'"/>-->
+<!--                                </td>-->
+<!--                                <td class="text-center" t-esc="item['available_qty']"/>-->
+<!--                                <td class="text-center" t-esc="item['warehouse1_qty']"/>-->
+<!--                                <td class="text-center" t-esc="item['warehouse2_qty']"/>-->
+<!--                                <td class="text-center" t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                <td class="text-center" t-esc="item['avg_use_per_month']"/>-->
+<!--                                <td class="text-center">-->
+<!--                                    <t t-if="item['months_of_stock'] == 0 and item['available_qty'] == 0 and item['warehouse1_qty'] == 0 and item['warehouse2_qty'] == 0 and item['qty_sold_last_12_mo'] == 0 and item['avg_use_per_month'] == 0">-->
+<!--                                        N/A-->
+<!--                                    </t>-->
+<!--                                    <t t-else="" t-esc="item['months_of_stock']"/>-->
+<!--                                </td>-->
+<!--                            </t>-->
+<!--                        </tr>-->
+<!--                    </tbody>-->
+                </table>
+            </div>
         </t>
     </template>
+
+<!--<template id="external_custom_layout_boxed">-->
+<!--    <div t-att-class="'article o_report_layout_boxed o_company_%s_layout' % env.company.id + (' o_report_layout_background' if env.company.layout_background in ['Geometric', 'Custom'] else '')"-->
+<!--         t-att-style="('background-image: url(data:image/png;base64,%s);' % env.company.layout_background_image.decode('utf-8')) if env.company.layout_background_image and env.company.layout_background == 'Custom' else ('background-image: url(/base/static/img/bg_background_template.jpg);' if env.company.layout_background == 'Geometric' else '')">-->
+<!--        <div class="pt-5">-->
+<!--            <t t-call="web.address_layout"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div t-att-class="'footer o_clean_footer o_company_%s_layout' % env.company.id">-->
+<!--        <div class="row">-->
+<!--            <div class="col-11"/>-->
+<!--            <div class="col-1">-->
+<!--                <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-end text-center">-->
+<!--                    <li class="list-inline-item"><strong><span class="page"/></strong></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</template>-->
+
+
+<!--    <template id="inventory_report_template">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <t t-call="item_inventory_report.external_custom_layout_boxed">-->
+<!--                <div class="row" style="margin-top:-40px;">-->
+<!--                    <div class="col-3">-->
+<!--                        <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo" style="max-height:100px; max-width: 90%; width:auto"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-9" style="margin-top:20px; font-family:calibri;font-size:18px;">-->
+<!--                        <strong>Item Inventory Report for the period from-->
+<!--                            <span t-esc="start_date.strftime('%m/%d/%Y')"/>-->
+<!--                        to-->
+<!--                            <span t-esc="end_date.strftime('%m/%d/%Y')"/>-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <br/>-->
+<!--                <div class="page container-fluid" style="font-family:calibri; font-size:12px;">-->
+<!--                    <div class="row">-->
+<!--                        <table class="table table-sm table-striped">-->
+<!--                            <thead>-->
+<!--                                <tr style="background-color:#D3D3D3;">-->
+<!--                                    <th>Product Code</th>-->
+<!--                                    <th>Available</th>-->
+<!--                                    <th>W 01</th>-->
+<!--                                    <th>W 02</th>-->
+<!--                                    <th>Qty Sold Last 12 Mos</th>-->
+<!--                                    <th>Avg Use Per Mo</th>-->
+<!--                                    <th>Months of Stock</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr t-foreach="docs" t-as="item">-->
+<!--                                    <t t-if="item['months_of_stock'] &lt;= 6 and item['months_of_stock'] &gt; 0">-->
+<!--                                        <td style="background-color:#FFFF00;" t-esc="item['default_code']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['available_qty']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse1_qty']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['warehouse2_qty']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['avg_use_per_month']"/>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;" t-esc="item['months_of_stock']"/>-->
+<!--                                    </t>-->
+<!--                                    <t t-else="">-->
+<!--                                        <td t-esc="item['default_code']"/>-->
+<!--                                        <td class="text-center" t-esc="item['available_qty']"/>-->
+<!--                                        <td class="text-center" t-esc="item['warehouse1_qty']"/>-->
+<!--                                        <td class="text-center" t-esc="item['warehouse2_qty']"/>-->
+<!--                                        <td class="text-center" t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                        <td class="text-center" t-esc="item['avg_use_per_month']"/>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-if="item['months_of_stock'] == 0 and item['available_qty'] == 0 and item['warehouse1_qty'] == 0 and item['warehouse2_qty'] == 0 and item['qty_sold_last_12_mo'] == 0 and item['avg_use_per_month']== 0">-->
+<!--                                                N/A-->
+<!--                                            </t>-->
+<!--                                            <t t-else="" t-esc="item['months_of_stock']"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
 
 
     <record id="action_report_inventory_template" model="ir.actions.report">
@@ -180,8 +309,199 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">item_inventory_report.inventory_report_template</field>
         <field name="report_file">item_inventory_report.inventory_report_template</field>
+         <field name="binding_model_id" ref="model_item_inventory_report_wizard"/>
+        <field name="binding_type">report</field>
     </record>
-    <!--        <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>-->
-
-
 </odoo>
+
+
+
+
+
+<!--<?xml version="1.0"?>-->
+<!--<odoo>-->
+
+<!--    <template id="external_custom_layout_boxed">-->
+<!--&lt;!&ndash;        <div t-attf-class="header o_company_#{env.company.id}_layout" t-att-style="report_header_style">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="o_boxed_header">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row mb8">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-6 text-end mb4">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="mt0 h4" t-field="company.report_header"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div name="company_address" class="float-end mb4">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <ul class="list-unstyled">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <li t-if="company.is_company_details_empty"><t t-esc="company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <li t-else=""><t t-esc="company.company_details"/></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <li t-if="forced_vat">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-esc="company.country_id.vat_label or 'Tax ID'"/>:&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span t-esc="forced_vat"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--        <div t-attf-class="article o_report_layout_boxed o_company_#{env.company.id}_layout {{  'o_report_layout_background' if env.company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % env.company.layout_background_image.decode('utf-8') if env.company.layout_background_image and env.company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if env.company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">-->
+<!--            <div class="pt-5">-->
+<!--                &lt;!&ndash; This div ensures that the address is not cropped by the header. &ndash;&gt;-->
+<!--                <t t-call="web.address_layout"/>-->
+<!--            </div>-->
+<!--            <t t-out="0"/>-->
+<!--        </div>-->
+
+<!--&lt;!&ndash;        <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div t-field="company.report_footer"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div t-if="report_type == 'pdf'">&ndash;&gt;-->
+<!--&lt;!&ndash;                    Page: <span class="page"/> / <span class="topage"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span t-field="o.name"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        <div t-attf-class="footer o_clean_footer o_company_#{env.company.id}_layout">-->
+<!--            <div class="row">-->
+<!--                <div class="col-11"/>-->
+
+<!--&lt;!&ndash;                <div class="col-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span t-field="env.company.report_footer"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span t-if="env.company.is_company_details_empty" t-field="env.company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span t-else="" t-field="env.company.company_details"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="mt0 mb0 h5" t-field="env.company.report_header"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                <div class="col-1">-->
+<!--                    <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-end text-center">-->
+<!--                        <li class="list-inline-item"><strong><span class="page"/></strong></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </template>-->
+
+
+
+<!--    <template id="inventory_report_template">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <div class="oe_structure"/>-->
+<!--            <t t-call="item_inventory_report.external_custom_layout_boxed">-->
+
+<!--                <div class="row" style="margin-top:-40px;">-->
+<!--                    <div class="col-3">-->
+<!--                        <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo" style="max-height:100px; max-width: 90%; width:auto"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-9" style="margin-top:20px; font-family:calibri;font-size:18px;">-->
+<!--                        <strong>Item Inventory Report for the period from-->
+<!--                            <span t-esc="start_date.strftime('%m/%d/%Y')"/>-->
+<!--                        to-->
+<!--                            <span t-esc="end_date.strftime('%m/%d/%Y')"/>-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <br/>-->
+<!--                    <div class="page container-fluid" style="font-family:calibri; font-size:12px;">-->
+
+<!--                    <div class="oe_structure"/>-->
+<!--                    <div class="row">-->
+<!--                        <table class="table table-sm table-striped" >-->
+<!--                            <thead>-->
+<!--                                <tr style="background-color:#D3D3D3;">-->
+<!--                                    <th>Product Code</th>-->
+<!--                                    <th>Available</th>-->
+<!--                                    <th>W 01</th>-->
+<!--                                    <th>W 02</th>-->
+<!--                                    <th>Qty Sold Last 12 Mos</th>-->
+<!--                                    <th>Avg Use Per Mo</th>-->
+<!--                                    <th>Months of Stock</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr t-foreach="docs" t-as="item">-->
+<!--                                    <t t-if="item['months_of_stock'] &lt;= 6 and item['months_of_stock'] &gt; 0">-->
+<!--                                        <td style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['default_code']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['available_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['warehouse1_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['warehouse2_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['avg_use_per_month']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center" style="background-color:#FFFF00;">-->
+<!--                                            <t t-esc="item['months_of_stock']"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                    <t t-else="">-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="item['default_code']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-esc="item['available_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-esc="item['warehouse1_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-esc="item['warehouse2_qty']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-esc="item['qty_sold_last_12_mo']"/>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <t t-esc="item['avg_use_per_month']"/>-->
+<!--                                        </td>-->
+
+<!--                                        <td class="text-center">-->
+<!--                                             <t t-if="item['months_of_stock'] == 0 and-->
+<!--                                                    item['available_qty'] == 0and-->
+<!--                                                    item['warehouse1_qty'] == 0 and-->
+<!--                                                    item['warehouse2_qty'] == 0  and-->
+<!--                                                    item['qty_sold_last_12_mo'] == 0  and-->
+<!--                                                    item['avg_use_per_month']== 0">-->
+<!--                                                <t t-esc="'N/A'"/>-->
+<!--                                             </t>-->
+
+<!--                                            <t t-else="">-->
+<!--                                                <t t-esc="item['months_of_stock']"/>-->
+<!--                                            </t>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+
+<!--    <record id="action_report_inventory_template" model="ir.actions.report">-->
+<!--        <field name="name">Item Inventory Report</field>-->
+<!--        <field name="model">item.inventory.report.wizard</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">item_inventory_report.inventory_report_template</field>-->
+<!--        <field name="report_file">item_inventory_report.inventory_report_template</field>-->
+<!--    </record>-->
+<!--    &lt;!&ndash;        <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>&ndash;&gt;-->
+
+
+<!--</odoo>-->

@@ -1,33 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
 
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<odoo>
     <record id="item_inventory_report_wizard_form" model="ir.ui.view">
         <field name="name">item.inventory.report.wizard.form</field>
         <field name="model">item.inventory.report.wizard</field>
         <field name="arch" type="xml">
-            <form>
-                <sheet string="Item Inventory Report">
+            <form string="Item Inventory Report">
+                <sheet>
                     <group>
                         <group>
                             <field name="start_date" invisible="1"/>
                             <field name="type" widget="radio"/>
-                            <field name="product_ids" attrs="{'invisible':[('type','!=','specific_products')],'required':[('type','=','specific_products')]}" widget="many2many_tags"/>
+                            <field name="product_ids" invisible="type != 'specific_products'" required="type == 'specific_products'" widget="many2many_tags"/>
                         </group>
                         <group>
-                            <field name="end_date" />
+                            <field name="end_date"/>
                         </group>
                     </group>
-
                     <footer>
-                        <button string="Generate Report" name="print_inventory_report"
-                            type="object" class="btn-primary"/>
-                        <button string="Discard" class="btn-secondary" special="cancel" />
+                        <button string="Generate Report" name="print_inventory_report" type="object" class="btn-primary"/>
+                        <button string="Discard" class="btn-secondary" special="cancel"/>
                     </footer>
                 </sheet>
             </form>
         </field>
     </record>
-
 
     <record id="action_item_inventory_report_wizard" model="ir.actions.act_window">
         <field name="name">Item Inventory Report</field>
@@ -36,12 +33,65 @@
         <field name="target">new</field>
     </record>
 
-
     <menuitem id="menu_item_inventory_report_wizard"
-        name="Item Inventory Report"
-        action="action_item_inventory_report_wizard"
-        parent="stock.menu_warehouse_report" sequence="200"/>
-        />
-
+              name="Item Inventory Report"
+              action="action_item_inventory_report_wizard"
+              parent="stock.menu_warehouse_report"
+              sequence="200"/>
 </odoo>
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+
+<!--    <record id="item_inventory_report_wizard_form" model="ir.ui.view">-->
+<!--        <field name="name">item.inventory.report.wizard.form</field>-->
+<!--        <field name="model">item.inventory.report.wizard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <sheet string="Item Inventory Report">-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="start_date" invisible="1"/>-->
+<!--                            <field name="type" widget="radio"/>-->
+<!--                            <field name="product_ids" attrs="{'invisible':[('type','!=','specific_products')],'required':[('type','=','specific_products')]}" widget="many2many_tags"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="end_date" />-->
+<!--                        </group>-->
+<!--                    </group>-->
+
+<!--                    <footer>-->
+<!--                        <button string="Generate Report" name="print_inventory_report"-->
+<!--                            type="object" class="btn-primary"/>-->
+<!--                        <button string="Discard" class="btn-secondary" special="cancel" />-->
+<!--                    </footer>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+<!--    <record id="action_item_inventory_report_wizard" model="ir.actions.act_window">-->
+<!--        <field name="name">Item Inventory Report</field>-->
+<!--        <field name="res_model">item.inventory.report.wizard</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="target">new</field>-->
+<!--    </record>-->
+
+
+<!--    <menuitem id="menu_item_inventory_report_wizard"-->
+<!--        name="Item Inventory Report"-->
+<!--        action="action_item_inventory_report_wizard"-->
+<!--        parent="stock.menu_warehouse_report" sequence="200"/>-->
+<!--        />-->
+
+<!--</odoo>-->
 
