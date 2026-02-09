@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    # 3406 , Puran , 6 feb 2026-->
+    <template id="inhrit_ckus_stub_custom_document"
+              inherit_id="l10n_us_check_printing.ckus_stub">
+        <xpath expr="//div[hasclass('row')]/div[1]" position="replace">
+            <div class="col-4 text-start">
+                <span t-out="page['partner_name']"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
