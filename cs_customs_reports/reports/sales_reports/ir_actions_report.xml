@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="action_high_low_invoice_custom" model="ir.actions.report">
+        <field name="name">High/Low Value Invoice CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_1_custom_cs</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_1_custom_cs</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_quotation_order_all_addressess_custom" model="ir.actions.report">
+        <field name="name">Quotation / Order - All Addresses CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_2_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_2_custom</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="action_quotation_order_w_o_total_custom" model="ir.actions.report">
+        <field name="name">Quotation / Order W/O Totals CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_3_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_3_custom</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_high_low_value_invoice_cor_cs_custom" model="ir.actions.report">
+        <field name="name">High/Low Value Invoice COR CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_1_copy_1_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_1_copy_1_custom</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="action_Quotation_ll_cor_cs_custom" model="ir.actions.report">
+        <field name="name">Quotation / Order - All Addresses copy(2) CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_2_copy_2_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_2_copy_2_custom</field>
+        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="action_Quotation_Order_Rebuild_custom" model="ir.actions.report">
+        <field name="name">Quotation / Order Rebuild CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_copy_5_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_copy_5_custom</field>
+        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+        <record id="paperformat_label_custom" model="report.paperformat">
+        <field name="name">Label Custom</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">152</field>
+        <field name="page_width">102</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">2.00</field>
+        <field name="margin_bottom">1.00</field>
+        <field name="margin_left">1.00</field>
+        <field name="margin_right">1.00</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="action_label_cs_custom" model="ir.actions.report">
+        <field name="name">Label CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.studio_main_report_custom</field>
+        <field name="report_file">cs_customs_reports.studio_main_report_custom</field>
+         <field name="paperformat_id" ref="cs_customs_reports.paperformat_label_custom"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+     <record id="action_label_copy_1_cs_custom" model="ir.actions.report">
+        <field name="name">Label copy(1) CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.studio_report_docume_copy_1_custom</field>
+        <field name="report_file">cs_customs_reports.studio_report_docume_copy_1_custom</field>
+          <field name="paperformat_id" ref="cs_customs_reports.paperformat_label_custom"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+    <record id="action_PRO_Editing_cs_custom" model="ir.actions.report">
+        <field name="name">PRO-FORMA for Editing CS</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cs_customs_reports.report_saleorder_pro_forma_copy_6_custom</field>
+        <field name="report_file">cs_customs_reports.report_saleorder_pro_forma_copy_6_custom</field>
+        <field name="print_report_name">'PRO-FORMA - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+
+
+
+
+</odoo>

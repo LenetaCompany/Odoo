@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_invoices_flipped_addresses_custom" model="ir.actions.report">
+            <field name="name">Invoices - flipped addresses CS </field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cs_customs_reports.report_invoice_with_payments_copy_2_custom</field>
+            <field name="report_file">cs_customs_reports.report_invoice_with_payments_copy_2_custom</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_us"/>
+        </record>
+
+
+        <record id="account_inflated_invoice_test_custom" model="ir.actions.report">
+            <field name="name">Inflated Invoice Test CS</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cs_customs_reports.report_invoice_with_payments_copy_6_custom</field>
+            <field name="report_file">cs_customs_reports.report_invoice_with_payments_copy_6_custom</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_us"/>
+
+        </record>
+
+
+        <record id="account_invoice_copy_cs_custom" model="ir.actions.report">
+            <field name="name">Invoices copy(11) CS</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cs_customs_reports.report_invoice_with_payments_copy_11_custom</field>
+            <field name="report_file">cs_customs_reports.report_invoice_with_payments_copy_11_custom</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_us"/>
+
+        </record>
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inhrit_report_payment_receipt_document_custom"
+              inherit_id="account.report_payment_receipt_document">
+
+        <xpath expr="/t/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col-3">
+                    <span>
+                        <strong>Credit Card Ending In:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="o.payment_token_id"/>
+                </div>
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3"/>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[2]/div[1]/span[1]/strong[1]" position="attributes">
+            <attribute name="t-if">o.payment_token_id != ""</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[2]/div[1]/span[1]/strong[1]" position="attributes">
+            <attribute name="t-if">o.payment_token_id</attribute>
+        </xpath>
+        <!--<xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/span[1]" position="attributes">-->
+        <!--  <attribute name="t-field">o.partner_id.x_studio_address_id</attribute>-->
+        <!--</xpath>-->
+        <xpath expr="//div[@class='row']/div[@class='col-6']/span[@t-field='o.partner_id']" position="attributes">
+            <attribute name="t-field">o.partner_id.x_studio_address_id</attribute>
+        </xpath>
+        <!--<xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/span[1]" position="attributes">-->
+        <!--  <attribute name="t-field">o.partner_id.company_name</attribute>-->
+        <!--</xpath>-->
+
+        <xpath expr="//div[@class='mb-4 mt-3']//div[@class='row'][2]/div[1]" position="attributes">
+            <attribute name="t-field">o.partner_id.company_name</attribute>
+        </xpath>
+
+
+        <!--<xpath expr="/t/t/div/div[1]/div/strong" position="before">-->
+        <!--  <span t-field="o.partner_id.display_name"/>-->
+        <!--</xpath>-->
+        <xpath expr="//div[@class='row']/div[@class='col-6']/t[1]" position="before">
+            <span t-field="o.partner_id.display_name"/>
+        </xpath>
+
+        <xpath expr="/t/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col-6">
+                    <span>New Column</span>
+                </div>
+                <div class="col-6">
+                    <span>New Column</span>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/t/div/div[2]" position="after">
+            <div class="row">
+                <div class="col-3">
+                    <span>
+                        <strong>Address ID:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="o.partner_id.x_studio_address_id"/>
+                </div>
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/t/div/div[3]/div[1]" position="attributes">
+            <attribute name="class" separator=" " add="col-6" remove="col-3"/>
+        </xpath>
+        <xpath expr="/t/t/div/div[2]" position="after">
+            <div class="row">
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3">
+                    <span>
+                        <strong>Date:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="o.date"/>
+                </div>
+                <div class="col-3"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/t/div/div[3]/div[3]/span[1]/strong" position="replace">
+            <strong>Payment Date:</strong>
+        </xpath>
+        <!--<xpath expr="/t/t/div/table/thead/tr/th[3]" position="after">-->
+        <!--  <th>-->
+        <!--    <span>Date</span>-->
+        <!--  </th>-->
+        <!--</xpath>-->
+        <!--<xpath expr="/t/t/div/table/tbody/tr/td[3]" position="after">-->
+        <!--  <td>-->
+        <!--    <span t-field="o.date"/>-->
+        <!--  </td>-->
+        <!--</xpath>-->
+        <!--  <xpath expr="//div[@name='date']/div[@class='col-6']/span[@t-field='o.date']" position="attributes">-->
+        <!--    <attribute name="t-field">o.date</attribute>-->
+        <!--</xpath>-->
+        <xpath expr="/t/t/div/div[4]/div[2]" position="attributes">
+            <attribute name="class" separator=" " add="col-6" remove="col-3"/>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[2]" position="inside">
+            <span>New Text Block</span>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[2]/span" position="after">
+            <span t-field="o.date"/>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[1]/span[1]/strong" position="after">
+            <span t-field="o.partner_id.x_studio_address_id"/>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[1]/span[2]" position="replace"/>
+        <xpath expr="/t/t/div/div[4]/div[2]/span[1]" position="replace">
+            <span>
+                <b>Payment Date:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[3]/span[2]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[3]/span[1]/strong[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[2]/div[2]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[3]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[2]/div[1]" position="replace"/>
+        <!--need to do -->
+        <!--<xpath expr="/t[1]/t[1]/div[1]/div[1]/div[1]/span[2]" position="replace"/>-->
+        <!--<xpath expr="/t[1]/t[1]/div[1]/div[1]/div[1]/strong[1]" position="replace"/>-->
+
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/div[1]" position="replace"/>
+        <xpath expr="/t/t/div/div[4]/div[1]/span/strong" position="replace">
+            <strong>Company Name:</strong>
+        </xpath>
+        <!--<xpath expr="/t/t/div/div[6]/div[1]/t[2]/strong" position="after">-->
+        <!--  <span t-field="o.partner_id.x_studio_address_id"/>-->
+        <!--</xpath>-->
+
+
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[1]/span[1]/strong[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[1]/span[1]/span[1]" position="replace"/>
+        <xpath expr="/t/t/div/div[4]/div[1]/span/br" position="before">
+            <span>New Text Block</span>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[1]/span/span" position="after">
+            <span t-field="o.date"/>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[1]/span/span[1]" position="replace">
+            <span>
+                <b>Payment Date:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[2]/span[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[2]" position="replace"/>
+
+        <!--<xpath expr="/t/t/div/div[6]/div[1]/t[1]/strong" position="after">-->
+        <!--  <span t-field="res_company.partner_id.x_studio_address_id"/>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="/t[1]/t[1]/div[1]/div[6]/div[1]/t[1]/span[1]" position="attributes">-->
+        <!--  <attribute name="t-field">o.partner_id.x_studio_address_id</attribute>-->
+        <!--</xpath>-->
+
+        <xpath expr="/t/t/div/div" position="after">
+            <div class="row">
+                <div class="col-3">
+                    <span>
+                        <strong>Saved Payment Token:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="o.payment_token_id"/>
+                </div>
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/t/div/div[2]/div[1]/span[1]/strong" position="replace">
+            <strong>Credit Card Ending In:</strong>
+        </xpath>
+        <xpath expr="/t/t/div/div[2]/div[1]" position="attributes">
+            <attribute name="style" separator=";" add="margin-bottom:20px"/>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/h3[1]/strong[1]/span[1]" position="replace"/>
+        <xpath expr="/t/t/div/h3/strong" position="replace">
+            <strong>Payment Receipt</strong>
+        </xpath>
+
+        <xpath expr="//table[@name='invoices']" position="replace">
+            <table name="invoices" t-if="values['display_invoices']" class="table" style="border:1px solid #ddd; border-collapse: collapse;">
+    <t t-set="invoices" t-value="o.reconciled_invoice_ids or o.reconciled_bill_ids"/>
+    <!-- Check if invoices include different currencies -->
+    <t t-foreach="invoices" t-as="inv">
+        <t t-if="any(inv.currency_id != par[2].currency_id for par in inv._get_reconciled_invoices_partials()[0])" t-set="otherCurrency" t-value="True"/>
+    </t>
+    <thead>
+        <tr>
+            <th style="border:1px solid #ddd; padding: 8px;"><strong>Invoice Date</strong></th>
+            <th style="border:1px solid #ddd; padding: 8px;"><strong>Invoice Number</strong></th>
+            <th style="border:1px solid #ddd; padding: 8px;"><strong>Reference</strong></th>
+            <!-- Add a column if there are different currencies -->
+            <th t-if="otherCurrency" class="text-end" style="border:1px solid #ddd; padding: 8px;"><strong>Amount In Currency</strong></th>
+            <th class="text-end" style="border:1px solid #ddd; padding: 8px;"><strong>Amount</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+        <t t-foreach="invoices" t-as="inv">
+            <!-- MOVE -->
+            <t t-if="inv.move_type != 'entry'">
+                <tr style="border-top:2px solid #000; border-collapse: collapse;">
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="inv.invoice_date">2023-01-01</span></td>
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="inv.name">INV001</span></td>
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="inv.ref" data-oe-demo="Sample Ref"/></td>
+                    <td t-if="otherCurrency" style="border:1px solid #ddd; padding: 8px;"/>
+                    <td class="text-end" style="border:1px solid #ddd; padding: 8px;"><span t-field="inv.amount_total">100.00 USD</span></td>
+                </tr>
+                <!-- PAYMENTS/REVERSALS -->
+                <tr t-foreach="inv._get_reconciled_invoices_partials()[0]" t-as="par">
+                    <t t-set="payment" t-value="par[2]"/>
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="payment.move_id.date">2023-01-05</span></td>
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="payment.move_id.name">PAY001</span></td>
+                    <td style="border:1px solid #ddd; padding: 8px;"><span t-field="payment.payment_id.memo" data-oe-demo="Payment Ref"/></td>
+                    <t t-set="amountPayment" t-value="-(par[0].debit_amount_currency if par[2].debit &gt; 0 else par[0].credit_amount_currency)"/>
+                    <t t-set="amountInvoice" t-value="-par[1]"/>
+                    <t t-set="currencyPayment" t-value="payment.currency_id"/>
+                    <t t-set="currencyInvoice" t-value="inv.currency_id"/>
+                    <!-- Fill the column "Amount In Currency" only if necessary -->
+                    <td t-if="otherCurrency" class="text-end" style="border:1px solid #ddd; padding: 8px;"><span t-if="currencyPayment != currencyInvoice" t-out="amountPayment" t-options="{'widget': 'monetary', 'display_currency': currencyPayment}">50.00 EUR</span></td>
+                    <td class="text-end" style="border:1px solid #ddd; padding: 8px;"><span t-out="amountInvoice" t-options="{'widget': 'monetary', 'display_currency': currencyInvoice}">25.00 USD</span></td>
+                </tr>
+                <!-- BALANCE -->
+                <tr>
+                    <td style="border:1px solid #ddd; padding: 8px;"/>
+                    <td style="border:1px solid #ddd; padding: 8px;"><strong>Due Amount for <span t-field="inv.name">INV001</span></strong></td>
+                    <td style="border:1px solid #ddd; padding: 8px;"/>
+                    <td t-if="otherCurrency" style="border:1px solid #ddd; padding: 8px;"/>
+                    <td class="text-end" style="border:1px solid #ddd; padding: 8px;"><strong><span t-field="inv.amount_residual">25.0 USD</span></strong></td>
+                </tr>
+            </t>
+        </t>
+    </tbody>
+</table>
+        </xpath>
+
+
+    </template>
+
+
+<!--    <template id="inhrit_ckus_stub_custom_document_cs"-->
+<!--              inherit_id="l10n_us_check_printing.ckus_stub">-->
+<!--        <xpath expr="/t[1]/div[1]/table[1]" position="attributes">-->
+<!--            <attribute name="t-if"></attribute>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t[1]/div[1]/div[1]" position="replace">-->
+<!--            <div class="row summary_line" style="padding-bottom: 50px !important;">-->
+<!--            <div class="col-4 text-start">-->
+<!--                <span t-if="page['manual_sequencing']" t-out="page['company']"/>-->
+<!--            </div>-->
+<!--            <div class="col-4 text-center date">-->
+<!--                <span t-out="page['date']"/>-->
+<!--            </div>-->
+<!--            <div class="col-4 text-end sequence_number">-->
+<!--                <span t-if="page['manual_sequencing'] and page['sequence_number']" t-out="page['sequence_number']"/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        </xpath>-->
+
+<!--    </template>-->
+
+<!--    <template id="inhrit_ckus_stub_copy_1_custom_document_cs"-->
+<!--              inherit_id="cs_customs_reports.ckus_stub_copy_1_custom">-->
+<!--        <xpath expr="/t/div" position="after">-->
+<!--            <div class="row">-->
+<!--                <div class="col-3">-->
+<!--                    <span>-->
+<!--                        <strong>Check Number:</strong>-->
+<!--                        <br/>-->
+<!--                    </span>-->
+<!--                    <span t-field="o.check_number"/>-->
+<!--                </div>-->
+<!--                <div class="col-3"/>-->
+<!--                <div class="col-3"/>-->
+<!--                <div class="col-3"/>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t[1]/div[2]/div[1]" position="replace"/>-->
+<!--        <xpath expr="/t/div[1]/table/thead/tr/th[1]" position="before">-->
+<!--            <th>-->
+<!--                <span>Check Number</span>-->
+<!--            </th>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div[1]/table/tbody/t/t[2]/tr/td[1]" position="before">-->
+<!--            <td>-->
+<!--                <span t-field="o.check_number"/>-->
+<!--            </td>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div[2]" position="after">-->
+<!--            <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                    <span>New Column</span>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    <span>New Column</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div[3]/div[2]/span" position="after">-->
+<!--            <span t-field="o.check_number"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t[1]/div[3]/div[2]/span[1]" position="replace"/>-->
+<!--        <xpath expr="/t[1]/div[3]/div[1]" position="replace"/>-->
+<!--        <xpath expr="/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[1]" position="replace"/>-->
+<!--        <xpath expr="/t[1]/div[1]/table[1]/tbody[1]/t[1]/t[2]/tr[1]/td[1]" position="replace"/>-->
+<!--    </template>-->
+
+<!--    <template id="inhrit_ckus_check_copy_1_custom_document_cs"-->
+<!--              inherit_id="cs_customs_reports.ckus_check_copy_1_custom">-->
+<!--        <xpath expr="/t/div/div[5]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-bottom:12px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[5]" position="attributes">-->
+<!--            <attribute name="style" separator=";" remove="margin-bottom:12px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[3]/div" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[3]/div" position="attributes">-->
+<!--            <attribute name="style" separator=";" remove="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[3]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[3]" position="attributes">-->
+<!--            <attribute name="style" separator=";" remove="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[3]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-left:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-top:52px" remove="margin-top:46px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-left:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="style" separator=";" remove="margin-left:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="style" separator=";" add="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="style" separator=";" remove="margin-right:10px"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[4]" position="attributes">-->
+<!--            <attribute name="class" separator=" " add="text-right"/>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/div/div[5]" position="attributes">-->
+<!--        </xpath>-->
+
+<!--    </template>-->
+
+
+</odoo>

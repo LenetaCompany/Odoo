@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="paperformat_check_us_cs" model="report.paperformat">
+            <field name="name">US Check Letter cs</field>
+            <field name="default" eval="False" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+<!--        <record id="action_print_check_cs_custom_cs" model="ir.actions.report">-->
+<!--            <field name="name">Print Check (Middle) copy(1) CS</field>-->
+<!--            <field name="model">account.payment</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_name">cs_customs_reports.print_check_middle_copy_1_custom</field>-->
+<!--            <field name="report_file">cs_customs_reports.print_check_middle_copy_1_custom</field>-->
+<!--            <field name="print_report_name">'Check Middle - %s' % (object.partner_id.name or '',)</field>-->
+<!--            <field name="binding_model_id" ref="account.model_account_payment"/>-->
+<!--            <field name="binding_type">report</field>-->
+<!--            <field name="paperformat_id" ref="cs_customs_reports.paperformat_check_us_cs"/>-->
+<!--              <field name="attachment">'check_'+(object.partner_id and object.partner_id.name or 'Internal')+'_'+(object.name)+'_middle.pdf'</field>-->
+<!--            <field name="attachment_use">True</field>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

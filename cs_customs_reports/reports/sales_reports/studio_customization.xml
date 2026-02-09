@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--    pdf quote-->
+    <template id="report_saleorder_document_custom_studio"
+              inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-set='information_block']" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+
+        <xpath expr="//div[@class='oe_structure'][1]" position="replace"/>
+        <xpath expr="//div[@class='page']" position="before">
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-1">
+                        <strong>Bill To:</strong>
+                    </div>
+                    <div>
+                        <strong t-field="doc.partner_invoice_id.name"/>
+                    </div>
+                    <div t-if="doc.partner_invoice_id.x_studio_attention">
+                        <span>ATTN:</span>
+                        <span t-field="doc.partner_invoice_id.x_studio_attention"/>
+                    </div>
+                    <div>
+                        <span t-field="doc.partner_invoice_id.street"/>
+                    </div>
+                    <t t-if="doc.partner_invoice_id.street2">
+                        <div>
+                            <span t-field="doc.partner_invoice_id.street2"/>
+                        </div>
+                    </t>
+                    <div>
+                        <span t-field="doc.partner_invoice_id.city"/>
+                        <span></span>
+                        <span t-field="doc.partner_invoice_id.state_id.code"/>
+                        <span></span>
+                        <span t-field="doc.partner_invoice_id.zip"/>
+                    </div>
+                    <div>
+                        <span t-field="doc.partner_invoice_id.country_id.name"/>
+                    </div>
+                </div>
+
+                <!-- Ship To Column (RIGHT SIDE) -->
+                <div class="col-6">
+                    <div class="mb-1">
+                        <strong>Ship To:</strong>
+                    </div>
+                    <div>
+                        <strong t-field="doc.partner_shipping_id.name"/>
+                    </div>
+                    <div t-if="doc.partner_shipping_id.x_studio_attention">
+                        <span>ATTN:</span>
+                        <span t-field="doc.partner_shipping_id.x_studio_attention"/>
+                    </div>
+                    <t t-if="doc.partner_shipping_id.x_studio_building_floor">
+                        <div>
+                            <span t-field="doc.partner_shipping_id.x_studio_building_floor"/>
+                        </div>
+                    </t>
+                    <div>
+                        <span t-field="doc.partner_shipping_id.street"/>
+                    </div>
+                    <t t-if="doc.partner_shipping_id.street2">
+                        <div>
+                            <span t-field="doc.partner_shipping_id.street2"/>
+                        </div>
+                    </t>
+                    <div>
+                        <span t-field="doc.partner_shipping_id.city"/>
+                        <span></span>
+                        <span t-field="doc.partner_shipping_id.state_id.code"/>
+                        <span></span>
+                        <span t-field="doc.partner_shipping_id.zip"/>
+                    </div>
+                    <div>
+                        <span t-field="doc.partner_shipping_id.country_id.name"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 text-left">
+                    <t t-set="is_proforma" t-value="env.context.get('proforma', False) or is_pro_forma"/>
+                    <div class="h4 m-0">
+                        <span t-if="is_proforma">Pro-Forma Invoice #</span>
+                        <span t-elif="doc.state in ['draft','sent']">Quotation #</span>
+                        <span t-else="">Order #</span>
+                        <span t-field="doc.name"/>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Information - 2 columns layout -->
+            <div class="row mb-4">
+                <!-- Left Column -->
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <strong>Customer PO:</strong>
+                            </div>
+                            <div t-field="doc.client_order_ref"/>
+
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div>
+                                        <strong>Dropship PO:</strong>
+                                    </div>
+                                    <div t-field="doc.x_studio_turks_dropship_po"/>
+                                </div>
+                            </div>
+                            <div class="col-6" style="margin-top: 20px;">
+                                <div style="display:inline-block; white-space: nowrap;">
+                                    <strong>Payment Terms:</strong>
+                                </div>
+                                <div t-field="doc.payment_term_id"/>
+                            </div>
+
+
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <strong>Order Date:</strong>
+                            </div>
+                            <div t-field="doc.date_order" t-options="{'widget': 'date'}"/>
+<!--change in this layout if requrid -->
+                            <div class="row mt-2">
+                                <div class="col-12" style="margin-top: 50px;">
+                                    <div>
+                                        <strong>Shipping Method:</strong>
+                                    </div>
+                                    <div>
+                                        <span t-field="doc.x_studio_shipping_method_to_be_used"/>
+                                        <t t-if="doc.carrier_id">
+                                            <br/>
+                                            <span t-field="doc.carrier_id.name"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--                    <div class="row mt-2">-->
+                    <!--                        <div class="col-6">-->
+                    <!--                            <div>-->
+                    <!--                                <strong>Dropship PO:</strong>-->
+                    <!--                            </div>-->
+                    <!--                            <div t-field="doc.x_studio_turks_dropship_po"/>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <strong>Salesperson:</strong>
+                            </div>
+                            <div t-field="doc.user_id"/>
+                        </div>
+                        <!--                        <div class="col-6">-->
+                        <!--                            <div>-->
+                        <!--                                <strong>Payment Terms:</strong>-->
+                        <!--                            </div>-->
+                        <!--                            <div t-field="doc.payment_term_id"/>-->
+                        <!--                        </div>-->
+                    </div>
+                    <!--                    <div class="row mt-2">-->
+                    <!--                        <div class="col-12">-->
+                    <!--                            <div>-->
+                    <!--                                <strong>Shipping Method:</strong>-->
+                    <!--                            </div>-->
+                    <!--                            <div>-->
+                    <!--                                <span t-field="doc.x_studio_shipping_method_to_be_used"/>-->
+                    <!--                                <t t-if="doc.carrier_id">-->
+                    <!--                                    <br/>-->
+                    <!--                                    <span t-field="doc.carrier_id.name"/>-->
+                    <!--                                </t>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="replace">
+        </xpath>
+
+        <xpath expr="//t[@t-set='layout_document_title']" position="replace"/>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]" position="attributes">
+            <attribute name="style">border-collapse: separate !important;</attribute>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]/thead/tr" position="replace">
+            <tr>
+                <!--                <th class="text-start fw-bold">Product</th>-->
+                <th class="text-start fw-bold">Description</th>
+                <th class="text-center fw-bold">Quantity</th>
+                <th class="text-center fw-bold">Unit</th>
+                <th class="text-center fw-bold">Unit Quantity</th>
+                <th class="text-center fw-bold">Unit Price (USD)</th>
+                <th class="text-center fw-bold">Taxes</th>
+                <th class="text-center fw-bold">Extensions (USD)</th>
+            </tr>
+        </xpath>
+
+        <xpath expr="//tr[@name='tr_product']" position="replace">
+            <tr name="tr_product" t-if="not line.display_type">
+                <!--                <td>-->
+                <!--                    <span t-field="line.product_id.name"/>-->
+                <!--                </td>-->
+                <td>
+                    <span t-field="line.name"/>
+                </td>
+
+                <td class="text-center">
+                    <span t-field="line.product_uom_qty"
+                          t-options="{'widget':'integer'}"/>
+                </td>
+
+                <td class="text-center">
+                    <span t-field="line.product_id.x_studio_uom"/>
+                </td>
+
+                <td class="text-center">
+                    <span t-field="line.product_id.x_studio_quantity_per_box"/>
+                </td>
+
+                <td class="text-center">
+                    <span t-field="line.price_unit"
+                          t-options="{
+                      'widget':'monetary',
+                      'display_currency': line.currency_id
+                  }"/>
+                </td>
+
+                <td class="text-center">
+                    <t t-set="taxes"
+                       t-value="', '.join(t.description or t.name for t in line.tax_ids)"/>
+                    <span t-out="taxes"/>
+                </td>
+
+                <td class="text-center o_price_total">
+                    <span t-field="line.price_subtotal"
+                          t-options="{
+                      'widget':'monetary',
+                      'display_currency': doc.currency_id
+                  }"/>
+                </td>
+
+            </tr>
+        </xpath>
+
+
+        <!--        <xpath expr="//tr[@name='tr_product']" position="replace">-->
+        <!--            <tr name="tr_product">-->
+        <!--                <td>-->
+        <!--                    <span t-field="line.name"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center">-->
+        <!--                    <span t-field="line.product_uom_qty" t-options="{'widget':'integer'}"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center">-->
+        <!--                    <span t-field="line.product_id.x_studio_uom"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center">-->
+        <!--                    <span t-field="line.product_id.x_studio_quantity_per_box"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center">-->
+        <!--                    <span t-field="line.price_unit"-->
+        <!--                          t-options="{'widget':'monetary','display_currency':line.currency_id}"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center">-->
+        <!--                    <t t-set="taxes" t-value="', '.join((t.description or t.name) for t in line.tax_ids)"/>-->
+        <!--                    <span t-out="taxes"/>-->
+        <!--                </td>-->
+
+        <!--                <td class="text-center o_price_total">-->
+        <!--                    <span t-field="line.price_subtotal"-->
+        <!--                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>-->
+        <!--                </td>-->
+
+        <!--            </tr>-->
+        <!--        </xpath>-->
+        <xpath expr="//tr[@name='tr_section']/td" position="attributes">
+            <attribute name="colspan">7</attribute>
+        </xpath>
+
+        <xpath expr="//tr[@name='tr_note']/td" position="attributes">
+            <attribute name="colspan">7</attribute>
+        </xpath>
+    </template>
+
+
+    <!--    <template id="report_saleorder_document_copy_2_custom_studio"-->
+    <!--              inherit_id="cs_customs_reports.report_saleorder_document_copy_2_custom">-->
+    <!--        <xpath expr="/t/t/div/div[9]" position="after">-->
+    <!--                    <div t-field="doc.partner_id" t-options-widget="'contact'"/>-->
+    <!--        </xpath>-->
+    <!--&lt;!&ndash;        <xpath expr="/t[1]/t[1]/div[1]/div[10]/div[1]/div[1]" position="attributes">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <attribute name="t-options-no_marker">True</attribute>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </xpath>&ndash;&gt;-->
+    <!--        <xpath expr="/t/t/div/div[9]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col">-->
+    <!--                    <span>New Text Block</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[10]/div/span" position="replace">-->
+    <!--            <span>-->
+    <!--                <b>Customer:</b>-->
+    <!--            </span>-->
+    <!--        </xpath>-->
+    <!--&lt;!&ndash;        <xpath expr="/t[1]/t[1]/div[1]/div[11]/div[1]" position="replace"/>&ndash;&gt;-->
+    <!--        <xpath expr="/t/t/div/div[11]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[12]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[13]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[14]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[15]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[16]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[12]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.x_studio_address_id"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[13]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.x_studio_attention"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[13]/div[1]/span[1]" position="replace">-->
+    <!--            <span>ATTN: </span>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[13]/div[1]/span[1]" position="attributes">-->
+    <!--            <attribute name="t-if">doc.partner_id.x_studio_attention</attribute>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[14]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.x_studio_building_floor"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[15]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.street"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[16]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.street2"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[17]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.zip"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[17]/div[1]/span[1]" position="after">-->
+    <!--            <span t-field="doc.partner_id.state_id.code"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[17]/div[1]/span[1]" position="after">-->
+    <!--            <span t-field="doc.partner_id.city"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[17]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--                <div class="col-6">-->
+    <!--                    <span>New Column</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[18]/div[1]/span" position="after">-->
+    <!--            <span t-field="doc.partner_id.country_id.name"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[12]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[13]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[14]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t/t/div/div[12]/div/span[2]" position="attributes">-->
+    <!--            <attribute name="class" separator=" " add="o_bold"/>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[15]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[16]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[17]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[18]/div[2]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[12]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[14]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[16]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[15]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[17]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[18]/div[1]/span[1]" position="replace"/>-->
+    <!--        <xpath expr="/t/t/div/div[2]" position="after">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-3">-->
+    <!--                    <span>-->
+    <!--                        <strong>BP Code:</strong>-->
+    <!--                        <br/>-->
+    <!--                    </span>-->
+    <!--                    <span t-field="doc.x_studio_bp_code_4"/>-->
+    <!--                </div>-->
+    <!--                <div class="col-3"/>-->
+    <!--                <div class="col-3"/>-->
+    <!--                <div class="col-3"/>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]" position="replace"/>-->
+    <!--        <xpath expr="/t/t/div/div[21]/div[4]" position="inside">-->
+    <!--            <span>-->
+    <!--                <strong>BP Code:</strong>-->
+    <!--                <br/>-->
+    <!--            </span>-->
+    <!--        </xpath>-->
+    <!--        <xpath expr="/t/t/div/div[21]/div[4]" position="inside">-->
+    <!--            <span t-field="doc.x_studio_bp_code_4"/>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+
+    <template id="report_report_saleorder_document_copy_3_custom_studio"
+              inherit_id="cs_customs_reports.report_saleorder_document_copy_3_custom">
+        <xpath expr="/t[1]/t[1]/div[1]/div[15]/div[1]/div[1]/table[1]" position="replace"/>
+    </template>
+
+
+    <template id="report_saleorder_document_copy_1_copy_1_custom_custom_studio"
+              inherit_id="cs_customs_reports.report_saleorder_document_copy_1_copy_1_custom">
+        <xpath expr="/t/t/div/p[1]" position="after">
+            <div class="row">
+                <div class="col text-center">
+
+                    <span>VAT 00.902.667/0001-80</span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_document_copy_2_copy_2_custom_custom_studio"
+              inherit_id="cs_customs_reports.report_saleorder_document_copy_2_copy_2_custom">
+        <xpath expr="/t[1]/t[1]/div[1]/div[11]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/div[14]/div[1]" position="replace"/>
+    </template>
+
+
+    <template id="report_saleorder_document_copy_5_custom_custom_studio"
+              inherit_id="cs_customs_reports.report_saleorder_document_copy_5_custom">
+        <xpath expr="//t[@t-set='information_block']" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+
+        <xpath expr="//div[@class='oe_structure'][1]" position="replace"/>
+        <xpath expr="//div[@class='page']" position="before">
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-1">
+                        <span>Bill To: </span>
+                    </div>
+                    <div t-field="doc.partner_invoice_id"
+     t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True, &quot;email_icons&quot;: True}"/>                    <!--                    <div>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.name"/>-->
+                    <!--                    </div>-->
+                    <!--                    <div t-if="doc.partner_invoice_id.x_studio_attention">-->
+                    <!--                        <span>ATTN:</span>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.x_studio_attention"/>-->
+                    <!--                    </div>-->
+                    <!--                    <div>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.street"/>-->
+                    <!--                    </div>-->
+                    <!--                    <t t-if="doc.partner_invoice_id.street2">-->
+                    <!--                        <div>-->
+                    <!--                            <span t-field="doc.partner_invoice_id.street2"/>-->
+                    <!--                        </div>-->
+                    <!--                    </t>-->
+                    <!--                    <div>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.city"/>-->
+                    <!--                        <span></span>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.state_id.code"/>-->
+                    <!--                        <span></span>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.zip"/>-->
+                    <!--                    </div>-->
+                    <!--                    <div>-->
+                    <!--                        <span t-field="doc.partner_invoice_id.country_id.name"/>-->
+                    <!--                    </div>-->
+                </div>
+
+                <!-- Ship To Column (RIGHT SIDE) -->
+                <div class="col-6">
+                    <div class="mb-1">
+                        <span>Ship To:</span>
+                    </div>
+                    <div  t-field="doc.partner_shipping_id"
+                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" style="
+    margin-left: 70px;
+"/>
+
+                    <!--                    <div style="margin-left: 50px;">-->
+                    <!--                        <span t-field="doc.partner_shipping_id.name"/>-->
+                    <!--                    </div>-->
+                    <!--                    <div t-if="doc.partner_shipping_id.x_studio_attention" style="margin-left: 50px;">-->
+                    <!--                        <span>ATTN:</span>-->
+                    <!--                        <span t-field="doc.partner_shipping_id.x_studio_attention"/>-->
+                    <!--                    </div>-->
+                    <!--                    <t t-if="doc.partner_shipping_id.x_studio_building_floor">-->
+                    <!--                        <div style="margin-left: 50px;">-->
+                    <!--                            <span t-field="doc.partner_shipping_id.x_studio_building_floor"/>-->
+                    <!--                        </div>-->
+                    <!--                    </t>-->
+                    <!--                    <div style="margin-left: 50px;">-->
+                    <!--                        <span t-field="doc.partner_shipping_id.street"/>-->
+                    <!--                    </div>-->
+                    <!--                    <t t-if="doc.partner_shipping_id.street2">-->
+                    <!--                        <div style="margin-left: 50px;">-->
+                    <!--                            <span t-field="doc.partner_shipping_id.street2"/>-->
+                    <!--                        </div>-->
+                    <!--                    </t>-->
+                    <!--                    <div style="margin-left: 50px;">-->
+                    <!--                        <span t-field="doc.partner_shipping_id.city"/>-->
+                    <!--                        <span></span>-->
+                    <!--                        <span t-field="doc.partner_shipping_id.state_id.code"/>-->
+                    <!--                        <span></span>-->
+                    <!--                        <span t-field="doc.partner_shipping_id.zip"/>-->
+                    <!--                    </div>-->
+                    <!--                    <div style="margin-left: 50px;">-->
+                    <!--                        <span t-field="doc.partner_shipping_id.country_id.name"/>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 text-left">
+                    <t t-set="is_proforma" t-value="env.context.get('proforma', False) or is_pro_forma"/>
+                    <div class="h4 m-0">
+                        <span t-if="is_proforma">Pro-Forma Invoice #</span>
+                        <span t-elif="doc.state in ['draft','sent']">Quotation #</span>
+                        <span t-else="">Order #</span>
+                        <span t-field="doc.name"/>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Information - 2 columns layout -->
+            <div class="row mb-4">
+                <!-- Left Column -->
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <strong>Customer PO:</strong>
+                            </div>
+                            <div t-field="doc.client_order_ref"/>
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <strong>Order Date:</strong>
+                            </div>
+                            <div t-field="doc.date_order" t-options="{'widget': 'date'}"/>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <div>
+                                <strong>Dropship PO:</strong>
+                            </div>
+                            <div t-field="doc.x_studio_turks_dropship_po"/>
+                        </div>
+                        <div class="col-6" style="
+    padding-left: 60px;
+">
+                            <div>
+                                <strong>Payment Terms:</strong>
+                            </div>
+                            <div t-field="doc.payment_term_id"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <strong>Salesperson:</strong>
+                            </div>
+                            <div t-field="doc.user_id"/>
+                        </div>
+                        <!--                        <div class="col-6">-->
+                        <!--                            <div>-->
+                        <!--                                <strong>Payment Terms:</strong>-->
+                        <!--                            </div>-->
+                        <!--                            <div t-field="doc.payment_term_id"/>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12" style="padding-left: 60px;">
+                            <div>
+                                <strong>Shipping Method:</strong>
+                            </div>
+                            <div>
+                                <span t-field="doc.x_studio_shipping_method_to_be_used"/>
+                                <t t-if="doc.carrier_id">
+                                    <br/>
+                                    <span t-field="doc.carrier_id.name"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="replace">
+        </xpath>
+
+        <xpath expr="//t[@t-set='layout_document_title']" position="replace"/>
+
+
+        <xpath expr="//table[contains(@class,'o_main_table')]/thead/tr" position="replace">
+            <tr>
+<!--                <th class="text-start fw-bold" style="border:1px solid #ddd;">Product</th>-->
+                <th class="text-start fw-bold" style="border:1px solid #ddd;">Description</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Quantity</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Unit</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Unit Quantity</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Unit Price <br></br> (USD)</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Taxes</th>
+                <th class="text-center fw-bold" style="border:1px solid #ddd;">Extensions <br></br>(USD)</th>
+            </tr>
+        </xpath>
+
+        <xpath expr="//tr[@name='tr_product']" position="replace">
+            <tr name="tr_product" t-if="not line.display_type">
+<!--                <td style="border:2px solid #000;">-->
+<!--                    <span t-field="line.product_id.name"/>-->
+<!--                </td>-->
+                <td style="border:1px solid #ddd;">
+                    <span t-field="line.name"/>
+                </td>
+
+                <td class="text-center" style="border:1px solid #ddd;">
+                    <span t-field="line.product_uom_qty"
+                          t-options="{'widget':'integer'}"/>
+                </td>
+
+                <td class="text-center" style="border:1px solid #ddd;">
+                    <span t-field="line.product_id.x_studio_uom"/>
+                </td>
+
+                <td class="text-center" style="border:1px solid #ddd;">
+                    <span t-field="line.product_id.x_studio_quantity_per_box"/>
+                </td>
+
+                <td class="text-center" style="border:1px solid #ddd;">
+                    <span t-field="line.price_unit"
+                          t-options="{'widget':'monetary','display_currency':line.currency_id}"/>
+                </td>
+
+                <td class="text-center" style="border:1px solid #ddd;">
+                    <t t-set="taxes"
+                       t-value="', '.join((t.description or t.name) for t in line.tax_ids)"/>
+                    <span t-out="taxes"/>
+                </td>
+
+                <td class="text-center o_price_total" style="border:1px solid #ddd;">
+                    <span t-field="line.price_subtotal"
+                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                </td>
+
+            </tr>
+        </xpath>
+
+        <xpath expr="//tr[@name='tr_section']/td" position="attributes">
+            <attribute name="colspan">7</attribute>
+        </xpath>
+
+        <xpath expr="//tr[@name='tr_note']/td" position="attributes">
+            <attribute name="colspan">7</attribute>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]" position="attributes">
+            <attribute name="class">o_has_total_table table o_main_table table-borderless</attribute>
+        </xpath>
+
+
+    </template>
+
+    <template id="report_studio_report_document_document_custom_cs_custom_studio"
+              inherit_id="cs_customs_reports.studio_report_document_document_custom_cs">
+        <xpath expr="/t/div" position="inside">
+            <div class="row">
+                <div class="col">
+                    <span t-field="res_company.logo" t-options-widget="&quot;image&quot;"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div/div/span" position="attributes">
+            <attribute name="style" separator=";" add="width:120px;display:inline-block"/>
+        </xpath>
+        <xpath expr="/t/div/div/div" position="attributes">
+            <attribute name="style" separator=";" add="margin-top:5px"/>
+        </xpath>
+        <xpath expr="/t/div/div" position="after">
+            <div class="row address">
+                <div class="col-5">
+                    <div t-field="res_company.partner_id" t-options-widget="'contact'"/>
+                </div>
+                <div class="col-5 offset-2"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div[2]" position="inside">
+            <div t-field="doc.partner_shipping_id" t-options-widget="'contact'"/>
+        </xpath>
+        <xpath expr="/t/div/div[2]" position="after">
+            <div class="row">
+                <div class="col-5">
+                    <span>
+                        <strong/>
+                    </span>
+                    <span t-field="doc.display_name"/>
+                </div>
+                <div class="col-1"/>
+                <div class="col-1"/>
+                <div class="col-5"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div[4]" position="inside">
+            <span>
+                <strong>PO#</strong>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div[4]" position="inside">
+            <span t-field="doc.client_order_ref"/>
+        </xpath>
+        <xpath expr="/t/div/div[3]" position="after">
+            <div class="row">
+                <div class="col-3">
+                    <span>
+                        <strong>Order Date:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.date_order"/>
+                </div>
+                <div class="col-5"/>
+                <div class="col-2"/>
+                <div class="col-2"/>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[2]" position="inside">
+            <span>
+                <strong>Shipping Method:</strong>
+                <br/>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[2]" position="inside">
+            <span t-field="doc.x_studio_shipping_method_to_be_used"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[3]" position="inside">
+            <span>
+                <strong>SKID #:</strong>
+                <br/>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[3]" position="inside">
+            <span t-field="doc.x_studio_skid_"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[4]" position="inside">
+            <span>
+                <strong>PACKAGE #:</strong>
+                <br/>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[4]" position="inside">
+            <span t-field="doc.x_studio_package_"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[4]/div[1]/span[2]" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[1]" position="attributes">
+            <attribute name="class" separator=" " add="h3"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[2]" position="attributes">
+            <attribute name="class" separator=" " add="h3"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[3]" position="attributes">
+            <attribute name="class" separator=" " add="h3"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[4]" position="attributes">
+            <attribute name="class" separator=" " add="h3"/>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div[1]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h1"/>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div[4]" position="attributes">
+            <attribute name="class" separator=" " add="h4"/>
+        </xpath>
+        <xpath expr="/t/div/div[3]" position="attributes">
+            <attribute name="style" separator=";" add="margin-top:3px"/>
+        </xpath>
+        <xpath expr="/t/div/div[3]" position="attributes">
+            <attribute name="style" separator=";" add="margin-top:5px" remove="margin-top:3px"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]" position="attributes">
+            <attribute name="style" separator=";" add="margin-top:5px"/>
+        </xpath>
+        <xpath expr="/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col">
+                    <span>New Text Block</span>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div/span" position="replace">
+            <span>Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div" position="attributes">
+            <attribute name="class" separator=" " add="text-right"/>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div" position="attributes">
+            <attribute name="class" separator=" " add="o_bold"/>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div/span" position="replace">
+            <span>Ship to:           </span>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div/span" position="replace">
+            <span>Ship to:           </span>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div/span" position="replace">
+            <span>Ship to:           </span>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div" position="attributes">
+            <attribute name="class" separator=" " add="h5"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[3]" position="attributes">
+            <attribute name="t-if">doc.x_studio_skid_</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[4]" position="attributes">
+            <attribute name="t-if">doc.x_studio_package_</attribute>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[2]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h4"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[2]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h5" remove="h4"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[2]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small" remove="h5"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'address', 'phone', 'email']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'address', 'phone']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'address']</attribute>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[4]/span[1]/strong" position="replace">
+            <strong>PK #:</strong>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[4]/span[1]/strong" position="replace">
+            <strong>PKG #:</strong>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[4]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[4]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[4]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small" remove="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[1]/span[2]" position="attributes">
+            <attribute name="class" separator=" " remove="h1"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]/div[1]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h4"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city', 'country_id']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[1]/span[1]/strong[1]" position="replace"/>
+        <xpath expr="/t[1]/div[1]/div[5]/div[1]/span[2]" position="replace"/>
+        <xpath expr="/t/div/div[5]/div[1]/span/br" position="before">
+            <span>New Text Block</span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span/span" position="replace">
+            <span>
+                <b>Product:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span/span" position="replace">
+            <span>
+                <b>Product:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span/span" position="replace">
+            <span>
+                <b>Product:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span/span" position="replace">
+            <span>
+                <b>Product:</b>
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div[1]/span/br" position="after">
+            <span t-field="doc.x_studio_product_"/>
+        </xpath>
+        <xpath expr="/t/div/div[1]" position="before">
+            <div class="row">
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3"/>
+                <div class="col-3">
+                    <span>
+                        <strong>Order Date:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.date_order"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[1]/div[4]/span[2]" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[1]/div[4]/span[1]/strong[1]" position="replace"/>
+        <xpath expr="/t[1]/div[1]/div[1]/div[4]/span[2]" position="replace"/>
+        <xpath expr="/t[1]/div[1]/div[1]/div[4]" position="replace"/>
+        <xpath expr="/t/div/div[1]/div[3]" position="inside">
+            <span t-field="doc.date_order"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[1]/div[3]" position="replace"/>
+        <xpath expr="/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col">
+                    <span t-field="doc.date_order"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[2]/div[1]/span[1]" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        <xpath expr="/t/div/div[2]/div" position="attributes">
+            <attribute name="class" separator=" " add="text-right"/>
+        </xpath>
+        <xpath expr="/t/div/div[1]/div[1]" position="inside">
+            <span>New Text Block</span>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[1]/div[1]" position="replace"/>
+        <xpath expr="/t/div/div[7]/div[1]/span/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h4"/>
+        </xpath>
+        <xpath expr="/t/div/div[7]/div[1]/span/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="h5" remove="h4"/>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city', 'country_id']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city', 'country_id', 'address']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'city', 'address']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[5]/div[2]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'address']</attribute>
+        </xpath>
+        <xpath expr="/t/div/div[7]/div[3]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[7]/div[3]/span[2]" position="attributes">
+            <attribute name="class" separator=" " remove="small"/>
+        </xpath>
+        <xpath expr="/t/div/div[7]/div[3]/span[2]" position="attributes">
+            <attribute name="class" separator=" " add="small"/>
+        </xpath>
+    </template>
+
+    <template id="studio_report_document_document_copy_1_custom_custom_custom_studio"
+              inherit_id="cs_customs_reports.studio_report_document_document_copy_1_custom">
+        <xpath expr="/t/div/div[2]" position="after">
+            <div class="row">
+                <div class="col">
+                    <span>New Text Block</span>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div/span" position="replace">
+            <span>Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div/span" position="replace">
+            <span><span class="oe-tabs" style="width: 40px;"></span>​<span class="oe-tabs" style="width: 40px;"></span>​<span
+                    class="oe-tabs" style="width: 40px;"></span>​<span class="oe-tabs"
+                                                                       style="width: 40px;"></span>​<span
+                    class="oe-tabs" style="width: 40px;"></span>​Ship to:
+            </span>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div/span" position="replace">
+            <span>Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[3]/div/span" position="replace">
+            <span>Ship to:</span>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[3]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/div[1]/div[6]/div[2]" position="replace"/>
+        <xpath expr="/t/div/div[4]" position="after">
+            <div class="row address">
+                <div class="col-5"/>
+                <div class="col-5 offset-2">
+                    <div t-field="doc.partner_shipping_id" t-options-widget="'contact'"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/div[1]/div[6]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/div[1]/div[7]/div[1]" position="replace"/>
+        <xpath expr="/t/div/div[5]/div[1]" position="inside">
+            <div t-field="res_company.partner_id" t-options-widget="'contact'"/>
+        </xpath>
+        <xpath expr="/t/div/div[4]" position="after">
+            <div class="row">
+                <div class="col">
+                    <span>New Text Block</span>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:150px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:500px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:450px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:400px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:350px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:300px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:325px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:340px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:335px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:330px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="replace">
+            <span style="margin-left:50px;margin-left:150px">Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="replace">
+            <span style="margin-left:50px;margin-left:150px">Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:500px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="replace">
+            <span style="margin-left:50px;margin-left:150px">Ship to:</span>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:375px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:325px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:330px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:335px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:333px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:332px" remove="margin-left:50px"/>
+        </xpath>
+        <xpath expr="/t/div/div[5]/div/span" position="attributes">
+            <attribute name="style" separator=";" add="margin-left:331px" remove="margin-left:50px"/>
+        </xpath>
+    </template>
+
+
+</odoo>

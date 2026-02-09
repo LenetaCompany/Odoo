@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!--picking opertion-->
+    <template id="report_report_picking_custom_studio"
+              inherit_id="stock.report_picking">
+        <xpath expr="//h3[@t-field='o.picking_type_id.code']" position="replace"/>
+        <!-- REMOVE duplicate WH/OUT/xxxxx -->
+        <xpath expr="//h2[@t-field='o.name']" position="replace"/>
+        <xpath expr="//div[@name='div_outgoing_address']/.." position="replace">
+            <div class="row mt16">
+
+                <div class="col-6">
+                    <span>
+                        <strong>Delivery Address:</strong>
+                    </span>
+                    <div t-field="o.move_ids[0].partner_id"
+                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                </div>
+
+                <div class="col-6">
+                    <span>
+                        <strong>Delivery Address:</strong>
+                    </span>
+                    <div t-field="o.partner_id.commercial_partner_id"
+                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;vat&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                </div>
+
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@class='oe_structure'][1]" position="before">
+            <h1 style="margin-top:20px;font-weight:700;" t-field="o.name"/>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'o_stock_report_header_row')]" position="replace">
+            <div class="row mt16">
+
+                <div class="col">
+                    <strong>Order:</strong>
+                    <div t-field="o.origin"/>
+                </div>
+
+                <div class="col">
+                    <strong>Status:</strong>
+                    <div t-field="o.state"/>
+                </div>
+
+                <div class="col">
+                    <strong>Scheduled Date:</strong>
+                    <div t-field="o.scheduled_date" t-options="{'widget':'date'}"/>
+                </div>
+
+                <div class="col">
+                    <strong>Weight:</strong>
+                    <div>
+                        <t t-esc="o.weight"/>
+                        lbs
+                    </div>
+                </div>
+
+            </div>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]" position="replace">
+            <table class="table table-sm o_main_table" style="table-layout:fixed;width:100%; border:1px solid #ddd;">
+                <thead>
+                    <tr style="border:1px solid #ddd;">
+                        <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">
+                            <strong>Product</strong>
+                        </th>
+                        <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">
+                            <strong>Quantity</strong>
+                        </th>
+                        <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">
+                            <strong>From</strong>
+                        </th>
+                        <!--                        <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">-->
+                        <!--                            <strong>Lot / Serial Number</strong>-->
+                        <!--                        </th>-->
+                    </tr>
+                </thead>
+
+                <tbody style="border:1px solid #ddd;">
+                    <t t-foreach="o.move_line_ids.filtered(lambda ml: not ml.is_entire_pack)" t-as="line">
+                        <tr style="border:2px solid #000;">
+                            <!-- Product -->
+                            <td class="text-start" style="border:1px solid #ddd;">
+                                <span t-field="line.product_id.display_name"/>
+                            </td>
+
+                            <!-- Quantity -->
+                            <td class="text-star" style="border:1px solid #ddd;">
+                                <span t-out="line.quantity"/>
+                                <span t-field="line.product_uom_id"/>
+                            </td>
+
+                            <!-- From -->
+                            <td class="text-start" style="border:1px solid #ddd;">
+                                <span t-field="line.location_id.display_name"/>
+                            </td>
+
+                            <!-- Lot / Serial -->
+                            <!--                            <td class="text-center" style="border:1px solid #ddd;">-->
+                            <!--                                <t t-if="line.lot_id or line.lot_name">-->
+                            <!--                                    <div t-out="line.lot_id.name or line.lot_name"-->
+                            <!--                                         t-options="{'widget':'barcode','humanreadable':1, 'width':300,  'height':80, 'img_style':'height:35px;'}"/>-->
+                            <!--                                </t>-->
+                            <!--                            </td>-->
+                        </tr>
+                    </t>
+                </tbody>
+
+            </table>
+        </xpath>
+
+    </template>
+
+
+    <template id="inherit_report_delivery_documentcustom_studio"
+              inherit_id="stock.report_delivery_document">
+        <!-- 1) Replace the report name with "Packing List:" -->
+        <xpath expr="//div[@class='page']/h2/span[1]" position="replace">
+            <span>Packing List:</span>
+        </xpath>
+
+        <!-- 2) Change "Delivery Address" label to "Ship To:" -->
+        <xpath expr="//div[@name='outgoing_delivery_address']/strong" position="replace">
+            <strong>Ship To:</strong>
+        </xpath>
+        <xpath expr="//div[@name='outgoing_delivery_address']/div" position="replace">
+            <div t-out="o.move_ids[0].partner_id or o.partner_id"
+                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: False, &quot;phone_icons&quot;: True}"/>
+
+        </xpath>
+
+        <!-- 3) Change "Customer" label to "Sold To:" -->
+        <xpath expr="//div[@name='customer_address']/strong" position="replace">
+        </xpath>
+        <xpath expr="//div[@name='partner_header']" position="replace">
+
+        </xpath>
+
+        <!-- 4) Adjust spacing for the address block wrapper -->
+        <xpath expr="//div[@name='div_outgoing_address']" position="attributes">
+            <attribute name="style" separator=";" add="margin-top:-40px"/>
+        </xpath>
+
+        <!-- 5) Add "Shipping method to be used from SO" after informations block -->
+        <xpath expr="//div[@id='informations']" position="after">
+            <div class="row mb-3">
+                <div class="col-5">
+                    <strong>Shipping method to be used from SO:</strong>
+                    <br/>
+                    <span t-field="o.x_studio_shipping_method_to_be_used"/>
+                </div>
+                <div class="col-2"/>
+                <div class="col-2"/>
+                <div class="col-3"/>
+            </div>
+        </xpath>
+
+        <!-- 6) Make Shipping Date display as DATE -->
+        <xpath expr="//div[@id='informations']//div[@name='div_sched_date']/div[@t-field='o.date_done']"
+               position="attributes">
+            <attribute name="t-options">{'widget':'date'}</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']//div[@name='div_sched_date']/div[@t-field='o.scheduled_date']"
+               position="attributes">
+            <attribute name="t-options">{'widget':'date'}</attribute>
+        </xpath>
+
+        <!-- ========================= -->
+        <!-- TABLE 1: stock_move_table (NOT DONE) -->
+        <!-- ========================= -->
+
+        <!-- 7) Add headers after Delivered column -->
+        <xpath expr="//table[@name='stock_move_table']/thead/tr/th[@name='th_sm_quantity']" position="after">
+            <th class="text-end">
+                <strong>UoM</strong>
+            </th>
+            <th class="text-end">
+                <strong>Quantity per box</strong>
+            </th>
+            <th class="text-end">
+                <strong>Boxes per case</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_table']/thead/tr/th[@name='th_sm_product']" position="replace">
+            <th name="th_sm_product">
+                <strong>Product</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_table']/thead/tr/th[@name='th_sm_ordered']" position="replace">
+            <th name="th_sm_ordered" class="text-end">
+                <strong>Ordered</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_table']/thead/tr/th[@name='th_sm_quantity']" position="replace">
+            <th name="th_sm_quantity" class="text-end">
+                <strong>Delivered</strong>
+            </th>
+        </xpath>
+
+
+        <!-- 8) Add cells after Delivered quantity td (2nd quantity column) -->
+        <!-- FIX: Check if the field exists before trying to access it -->
+        <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[contains(@class,'o_td_quantity')][2]"
+               position="after">
+            <td class="text-end">
+                <!-- Use product field instead of move field -->
+                <span t-field="move.product_id.x_studio_uom"/>
+            </td>
+            <td class="text-end">
+                <span t-field="move.product_id.x_studio_quantity_per_box"/>
+            </td>
+            <td class="text-end">
+                <span t-field="move.product_id.x_studio_boxes_per_case"/>
+            </td>
+        </xpath>
+
+
+        <!-- ========================= -->
+        <!-- TABLE 2: stock_move_line_table (DONE) -->
+        <!-- This is more complex because it uses aggregated lines -->
+        <!-- ========================= -->
+
+        <!-- 9) Add headers after Delivered column on DONE table -->
+        <xpath expr="//table[@name='stock_move_line_table']//th[@name='th_sml_quantity']" position="after">
+            <th class="text-end">
+                <strong>UoM</strong>
+            </th>
+            <th class="text-end">
+                <strong>Quantity per box</strong>
+            </th>
+            <th class="text-end">
+                <strong>Boxes per case</strong>
+            </th>
+        </xpath>
+
+
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='th_sml_product']" position="replace">
+            <th name="th_sm_product">
+                <strong>Product</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='th_sml_package']" position="replace">
+            <th name="th_sml_package" t-if="has_multi_level_packages">
+                <strong>Package</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='th_sml_qty_ordered']" position="replace">
+            <th name="th_sml_qty_ordered" class="text-end" t-if="not has_serial_number">
+                <strong>
+                Ordered
+                </strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='lot_serial']" position="replace">
+            <th name="lot_serial" class="text-end" t-else="">
+                <strong>
+                Lot/Serial Number
+                </strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='th_sml_quantity']" position="replace">
+            <th name="th_sml_quantity" class="text-end">
+                  <strong>
+                Delivered
+                  </strong>
+            </th>
+
+        </xpath>
+
+        <!-- IMPORTANT: You also need to modify the aggregated lines template -->
+        <!-- This is more complex because aggregated_lines uses a different structure -->
+        <!-- You'll need to modify the stock.stock_report_delivery_aggregated_move_lines template -->
+
+    </template>
+
+
+</odoo>
