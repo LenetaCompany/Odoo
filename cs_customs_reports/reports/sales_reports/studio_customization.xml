@@ -102,11 +102,14 @@
                             <div t-field="doc.client_order_ref"/>
 
                             <div class="row mt-2">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div>
                                         <strong>Dropship PO:</strong>
                                     </div>
                                     <div t-field="doc.x_studio_turks_dropship_po"/>
+                                </div>
+                                <div class="col-6">
+                                    <div></div>
                                 </div>
                             </div>
                             <div class="col-6" style="margin-top: 20px;">
@@ -125,16 +128,13 @@
                             <div t-field="doc.date_order" t-options="{'widget': 'date'}"/>
 <!--change in this layout if requrid -->
                             <div class="row mt-2">
-                                <div class="col-12" style="margin-top: 50px;">
+                                <div class="col-12" style="margin-top: 20px;">
                                     <div>
                                         <strong>Shipping Method:</strong>
                                     </div>
-                                    <div>
-                                        <span t-field="doc.x_studio_shipping_method_to_be_used"/>
-                                        <t t-if="doc.carrier_id">
-                                            <br/>
-                                            <span t-field="doc.carrier_id.name"/>
-                                        </t>
+                                    <div t-field="doc.partner_id.x_studio_shipping_method" style="font-size: 12px;">
+
+<!--                                        <span t-field="doc.partner_invoice_id.x_studio_shipping_method"/>-->
                                     </div>
                                 </div>
                             </div>
