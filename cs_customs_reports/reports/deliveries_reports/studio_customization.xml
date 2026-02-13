@@ -75,9 +75,9 @@
                         <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">
                             <strong>From</strong>
                         </th>
-                        <!--                        <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">-->
-                        <!--                            <strong>Lot / Serial Number</strong>-->
-                        <!--                        </th>-->
+                                                <th class="text-center" style="border:1px solid #ddd; font-weight: bold;">
+                                                    <strong>Lot / Serial Number</strong>
+                                                </th>
                     </tr>
                 </thead>
 
@@ -99,14 +99,25 @@
                             <td class="text-start" style="border:1px solid #ddd;">
                                 <span t-field="line.location_id.display_name"/>
                             </td>
-
                             <!-- Lot / Serial -->
-                            <!--                            <td class="text-center" style="border:1px solid #ddd;">-->
-                            <!--                                <t t-if="line.lot_id or line.lot_name">-->
-                            <!--                                    <div t-out="line.lot_id.name or line.lot_name"-->
-                            <!--                                         t-options="{'widget':'barcode','humanreadable':1, 'width':300,  'height':80, 'img_style':'height:35px;'}"/>-->
-                            <!--                                </t>-->
-                            <!--                            </td>-->
+                                   <td class="text-center" style="border:1px solid #ddd;">
+                            <t t-if="line.lot_id">
+                                <span t-field="line.lot_id.name"
+                                      t-options="{'widget': 'barcode',
+                                                  'humanreadable': 1,
+                                                  'width': 300,
+                                                  'height': 80,
+                                                  'img_style': 'height:35px;'}"/>
+                            </t>
+                            <t t-elif="line.lot_name">
+                                <span t-esc="line.lot_name"
+                                      t-options="{'widget': 'barcode',
+                                                  'humanreadable': 1,
+                                                  'width': 300,
+                                                  'height': 80,
+                                                  'img_style': 'height:35px;'}"/>
+                            </t>
+                        </td>
                         </tr>
                     </t>
                 </tbody>
