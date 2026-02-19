@@ -15,7 +15,8 @@
                         <strong>Bill To:</strong>
                     </div>
                     <div>
-                        <strong t-field="doc.partner_invoice_id.name"/>
+                        <strong t-field="doc.partner_id.x_studio_address_id"/>
+<!--                        <strong t-field="doc.partner_invoice_id.name"/>-->
                     </div>
                     <div t-if="doc.partner_invoice_id.x_studio_attention">
                         <span>ATTN:</span>
@@ -47,7 +48,8 @@
                         <strong>Ship To:</strong>
                     </div>
                     <div>
-                        <strong t-field="doc.partner_shipping_id.name"/>
+<!--                        <strong t-field="doc.partner_shipping_id.name"/>-->
+                        <strong t-field="doc.partner_shipping_id.x_studio_address_id"/>
                     </div>
                     <div t-if="doc.partner_shipping_id.x_studio_attention">
                         <span>ATTN:</span>
