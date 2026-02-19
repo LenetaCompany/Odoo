@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Extend Many2XAutocomplete template -->
+    <t t-inherit="web.Many2XAutocomplete" t-inherit-mode="extension">
+
+        <!-- Replace option slot rendering -->
+        <xpath expr="//AutoComplete" position="replace">
+
+              <AutoComplete t-else="" t-props="autoCompleteProps">
+            <t t-set-slot="option" t-slot-scope="optionScope">
+                <t t-slot="{{ optionScope.data.slotName }}" t-props="optionScope.data" label="optionScope.label">
+
+                      <t t-if="props.resModel == 'product.template' and props.fieldString == 'Product' and optionScope.data.record">
+
+                        <div class="d-flex justify-content-between w-100">
+
+                            <!-- LEFT SIDE (default_code) -->
+<!--                            <span class="text-muted me-2">-->
+<!--                                <t t-out="optionScope.data.record.default_code"/>-->
+<!--                            </span>-->
+
+                            <!-- RIGHT SIDE (name) -->
+                            <span>
+                                <t t-out="optionScope.data.record.display_name"/>
+                            </span>
+
+                        </div>
+                     </t>
+
+                    <t t-else="">
+                        <t t-out="optionScope.label"/>
+                     </t>
+                </t>
+            </t>
+        </AutoComplete>
+
+
+
+        </xpath>
+
+    </t>
+
+</templates>
+
+
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<templates xml:space="preserve">-->
+
+<!--    &lt;!&ndash; Extend Many2XAutocomplete template &ndash;&gt;-->
+<!--    <t t-inherit="web.Many2XAutocomplete" t-inherit-mode="extension">-->
+
+<!--        &lt;!&ndash; Replace option slot rendering &ndash;&gt;-->
+<!--        <xpath expr="//AutoComplete" position="replace">-->
+
+<!--              <AutoComplete t-else="" t-props="autoCompleteProps">-->
+<!--            <t t-set-slot="option" t-slot-scope="optionScope">-->
+<!--                <t t-slot="{{ optionScope.data.slotName }}" t-props="optionScope.data" label="optionScope.label">-->
+
+<!--                     <t t-if="optionScope.data.record">-->
+<!--                        <div class="d-flex justify-content-between w-100">-->
+
+<!--                            &lt;!&ndash; LEFT SIDE (default_code) &ndash;&gt;-->
+<!--&lt;!&ndash;                            <span class="text-muted me-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <t t-out="optionScope.data.record.default_code"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </span>&ndash;&gt;-->
+
+<!--                            &lt;!&ndash; RIGHT SIDE (name) &ndash;&gt;-->
+<!--                            <span>-->
+<!--                                <t t-out="optionScope.data.record.display_name"/>-->
+<!--                            </span>-->
+
+<!--                        </div>-->
+<!--                     </t>-->
+
+<!--                    <t t-else="">-->
+<!--                        <t t-out="optionScope.label"/>-->
+<!--                     </t>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--        </AutoComplete>-->
+
+
+
+<!--        </xpath>-->
+
+<!--    </t>-->
+
+<!--</templates>-->
