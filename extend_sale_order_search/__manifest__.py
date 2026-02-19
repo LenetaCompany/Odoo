@@ -6,6 +6,12 @@
     'author': 'Fawad Mazhar',
     'website': 'https://comstarusa.com',
     'depends': ['base','sale','sale_management'],
-   'data': [],
-
+    'data': [
+        # 'views/sale_order_views.xml',
+    ],
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'extend_sale_order_search/static/src/m2o_product_display.js',
+    #     ],
+    # },
     'license': 'LGPL-3',}

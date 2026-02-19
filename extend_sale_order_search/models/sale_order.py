@@ -57,4 +57,68 @@ class ProductTemplate(models.Model):
                 result.append((t.id, t.name))
         return result
 
+
 #################################################################
+###################################################################3
+from odoo import models, api
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        if not name:
+            return super().name_search(name, args, operator, limit)
+
+        name = name.strip()
+
+        # -------------------------------------------------
+        # STEP 1 : EXACT MATCH (default_code OR name)
+        # -------------------------------------------------
+        exact_products = self.search([
+            '|',
+            ('default_code', '=ilike', name),
+            ('name', '=ilike', name),
+        ], limit=1)
+
+        if exact_products:
+            return exact_products.name_get()
+
+        # -------------------------------------------------
+        # STEP 2 : PREFIX MATCH (while typing)
+        # -------------------------------------------------
+        prefix_products = self.search([
+            '|',
+            ('default_code', 'ilike', name + '%'),
+            ('name', 'ilike', name + '%'),
+        ], limit=limit)
+
+        if prefix_products:
+            return prefix_products.name_get()
+
+        # -------------------------------------------------
+        # STEP 3 : FALLBACK
+        # -------------------------------------------------
+        return super().name_search(name, args, operator, limit)
+
+    def name_get(self):
+        result = []
+        for product in self:
+            if product.default_code:
+                result.append(
+                    (product.id, f"[{product.default_code}] {product.name}")
+                )
+            else:
+                result.append((product.id, product.name))
+        return result
+
+
+
+
+
+
+
+
