@@ -92,99 +92,76 @@
                     </div>
                 </div>
             </div>
-            <!-- Order Information - 2 columns layout -->
-            <div class="row mb-4">
-                <!-- Left Column -->
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-6">
-                            <div>
-                                <strong>Customer PO:</strong>
-                            </div>
-                            <div t-field="doc.client_order_ref"/>
-
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div>
-                                        <strong>Dropship PO:</strong>
-                                    </div>
-                                    <div t-field="doc.x_studio_turks_dropship_po"/>
-                                </div>
-                                <div class="col-6">
-                                    <div></div>
-                                </div>
-                            </div>
-                            <div class="col-6" style="margin-top: 20px;">
-                                <div style="display:inline-block; white-space: nowrap;">
-                                    <strong>Payment Terms:</strong>
-                                </div>
-                                <div t-field="doc.payment_term_id"/>
-                            </div>
-
-
+<!--leneta ticket no :  pooran 24/02/2026 set the alignment of shipping Method in sale order PDF report  -->
+        <!-- Order Information - 2 columns layout -->
+            <div class="row mb-1">
+                <div class="row">
+                    <div class="col-3">
+                        <div>
+                            <strong>Customer PO:</strong>
                         </div>
-                        <div class="col-6">
-                            <div>
-                                <strong>Order Date:</strong>
-                            </div>
-                            <div t-field="doc.date_order" t-options="{'widget': 'date'}"/>
-<!--change in this layout if requrid -->
-                            <div class="row mt-2">
-                                <div class="col-12" style="margin-top: 20px;">
-                                    <div>
-                                        <strong>Shipping Method:</strong>
-                                    </div>
-                                    <div t-field="doc.partner_id.x_studio_shipping_method" style="font-size: 12px;">
-
-<!--                                        <span t-field="doc.partner_invoice_id.x_studio_shipping_method"/>-->
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <div t-field="doc.client_order_ref"/>
                     </div>
-                    <!--                    <div class="row mt-2">-->
-                    <!--                        <div class="col-6">-->
-                    <!--                            <div>-->
-                    <!--                                <strong>Dropship PO:</strong>-->
-                    <!--                            </div>-->
-                    <!--                            <div t-field="doc.x_studio_turks_dropship_po"/>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
+                    <div class="col-3">
+                        <div>
+                            <strong>Order Date:</strong>
+                        </div>
+                        <div t-field="doc.date_order" t-options="{'widget': 'date'}"/>
+                    </div>
+                    <div class="col-3">
+                        <div>
+                            <strong>Salesperson:</strong>
+                        </div>
+                        <div t-field="doc.user_id"/>
+                    </div>
+                    <div class="col-3">
 
-
+                    </div>
                 </div>
-
-                <!-- Right Column -->
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-6">
-                            <div>
-                                <strong>Salesperson:</strong>
-                            </div>
-                            <div t-field="doc.user_id"/>
+            </div>
+            <div class="row mb-4">
+                <div class="row">
+                    <div class="col-3">
+                        <div>
+                            <strong>Dropship PO:</strong>
                         </div>
-                        <!--                        <div class="col-6">-->
-                        <!--                            <div>-->
-                        <!--                                <strong>Payment Terms:</strong>-->
-                        <!--                            </div>-->
-                        <!--                            <div t-field="doc.payment_term_id"/>-->
-                        <!--                        </div>-->
+                        <div t-field="doc.x_studio_turks_dropship_po"/>
                     </div>
-                    <!--                    <div class="row mt-2">-->
-                    <!--                        <div class="col-12">-->
-                    <!--                            <div>-->
-                    <!--                                <strong>Shipping Method:</strong>-->
-                    <!--                            </div>-->
-                    <!--                            <div>-->
-                    <!--                                <span t-field="doc.x_studio_shipping_method_to_be_used"/>-->
-                    <!--                                <t t-if="doc.carrier_id">-->
-                    <!--                                    <br/>-->
-                    <!--                                    <span t-field="doc.carrier_id.name"/>-->
-                    <!--                                </t>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="row">
+                    <div class="col-3">
+                        <div style="display:inline-block; white-space: nowrap;">
+                            <strong>Payment Terms:</strong>
+                        </div>
+                        <div t-field="doc.payment_term_id"/>
+                    </div>
+                    <div class="col-3">
+                        <div>
+                            <strong>Shipping Method:</strong>
+                        </div>
+                        <!--<div t-field="doc.partner_id.x_studio_shipping_method">-->
+                        <div t-field="doc.x_studio_shipping_method_to_be_used">
+                            <!--<span t-field="doc.partner_invoice_id.x_studio_shipping_method"/>-->
+                        </div>
+
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-3">
+
+                    </div>
                 </div>
             </div>
         </xpath>
