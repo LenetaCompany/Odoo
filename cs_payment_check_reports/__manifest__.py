@@ -3,7 +3,7 @@
     'version': '19.0.0.0',
     'category': 'Inventory/Inventory',
     'summary': 'Item Inventory Report V 1.0',
-    'author': '',
+    'author': 'ComstarUSA',
     'website': 'https://comstarusa.com',
     'depends': ['base', 'web', 'sale', 'account','l10n_us_check_printing'],
     'data': [

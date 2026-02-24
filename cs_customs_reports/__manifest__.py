@@ -3,7 +3,7 @@
     'version': '19.0.0.0',
     'category': 'Inventory/Inventory',
     'summary': 'Custom Reports V 1.0',
-    'author': '',
+    'author': 'ComstarUSA',
     'website': 'https://comstarusa.com',
     'depends': ['base', 'web', 'sale', 'account', 'stock', 'product'],
     'data': [
