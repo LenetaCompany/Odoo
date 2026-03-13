@@ -3,7 +3,7 @@
     'version': '19.0.0.0',
     'category': 'contacts',
     'summary': 'Custom Contact V 1.0',
-    'author': '',
+    'author': 'ComstarUSA',
     'website': 'https://comstarusa.com',
     'depends': ['base', 'web','contacts'],
     'data': [
