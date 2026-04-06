@@ -1,0 +1,8 @@
+.o_table > :not(caption) > * > * {
+    padding: 0px 0px !important;
+}
+
+.o_table td,
+.o_table th {
+    line-height: 20px !important;
+}
