@@ -587,20 +587,20 @@
             <strong>Order:</strong>
         </xpath>
 
-        <xpath expr="//div[@id='informations']//div[@name='delivery_date']/strong" position="replace">
-            <strong>Ship Date:</strong>
-        </xpath>
+<!--        <xpath expr="//div[@id='informations']//div[@name='delivery_date']/strong" position="replace">-->
+<!--            <strong>Ship Date:</strong>-->
+<!--        </xpath>-->
 
-        <xpath expr="//div[@id='informations']//div[@name='delivery_date']/div[@t-field='o.delivery_date']"
-               position="attributes">
-            <attribute name="t-options">{'widget': 'date'}</attribute>
-        </xpath>
+<!--        <xpath expr="//div[@id='informations']//div[@name='delivery_date']/div[@t-field='o.delivery_date']"-->
+<!--               position="attributes">-->
+<!--            <attribute name="t-options">{'widget': 'date'}</attribute>-->
+<!--        </xpath>-->
 
-         <xpath expr="//div[@id='informations']//div[@name='delivery_date']/div[@t-field='o.delivery_date']"
-               position="replace">
-            <br/>
-    <span t-field="o.delivery_date"/>
-        </xpath>
+<!--         <xpath expr="//div[@id='informations']//div[@name='delivery_date']/div[@t-field='o.delivery_date']"-->
+<!--               position="replace">-->
+<!--            <br/>-->
+<!--    <span t-field="o.delivery_date"/>-->
+<!--        </xpath>-->
 
 
 
