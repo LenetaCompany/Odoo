@@ -386,21 +386,100 @@
 
         <xpath expr="//t[@t-call='web.external_layout']/div[@class='row']" position="replace">
             <br></br>
-            <div class="row">
+              <div class="row">
                 <!-- SOLD TO -->
                 <div class="col-6">
-                    <strong class="d-block mt-3">Sold To:</strong>
-                    <div t-field="o.partner_id"
-                         t-options="{                     'widget':'contact',                     'fields':['name','address','phone','mobile','email'],                     'no_marker':True                 }"/>
-                    <div t-if="o.partner_id.x_studio_building_floor" t-field="o.partner_id.x_studio_building_floor"/>
+                    <strong class="d-block mt-3">Sold To</strong>
+                    <!--                    <div t-field="o.partner_id"-->
+                    <!--                         t-options="{                     'widget':'contact',                     'fields':['email','name','address','phone','mobile',],                     'no_marker':True                 }"/>-->
+                    <!--                    <div t-if="o.partner_id.x_studio_building_floor" t-field="o.partner_id.x_studio_building_floor"/>-->
+                    <div t-if="o.partner_id.name">
+                        <span t-field="o.partner_id.name"/>
+                    </div>
+
+                    <div>
+                        <span t-field="o.partner_id.street"/>
+                        <t t-if="o.partner_id.street2">
+                            ,
+                            <span t-field="o.partner_id.street2"/>
+                        </t>
+                    </div>
+
+                    <div>
+                        <span t-field="o.partner_id.city"/>
+                        <t t-if="o.partner_id.state_id">
+                            ,
+                            <span t-field="o.partner_id.state_id"/>
+                        </t>
+                        <t t-if="o.partner_id.zip">
+                            -
+                            <span t-field="o.partner_id.zip"/>
+                        </t>
+                    </div>
+
+                    <div t-if="o.partner_id.country_id">
+                        <span t-field="o.partner_id.country_id"/>
+                    </div>
+
+                    <div t-if="o.partner_id.phone">
+                        <span t-field="o.partner_id.phone"/>
+                    </div>
+
+                    <div t-if="o.partner_id.email">
+                        <span t-field="o.partner_id.email"/>
+                    </div>
+
+                    <div t-if="o.partner_id.x_studio_building_floor">
+                        <span t-field="o.partner_id.x_studio_building_floor"/>
+                    </div>
                 </div>
 
                 <!-- SHIP TO -->
                 <div class="col-6">
-                    <strong class="d-block mt-3">Ship To:</strong>
-                    <div t-field="o.partner_shipping_id"
-                         t-options="{                     'widget':'contact',                     'fields':['name','address','phone','mobile','email'],                     'no_marker':True                 }"/>
-                    <div t-if="o.x_studio_buildingfloorroom_1" t-field="o.x_studio_buildingfloorroom_1"/>
+                    <strong class="d-block mt-3">Ship To</strong>
+                    <!--                    <div t-field="o.partner_shipping_id"-->
+                    <!--                         t-options="{                     'widget':'contact',                     'fields':['email','name','address','phone','mobile'],                     'no_marker':True                 }"/>-->
+                    <!--                    <div t-if="o.x_studio_buildingfloorroom_1" t-field="o.x_studio_buildingfloorroom_1"/>-->
+
+                    <div t-if="o.partner_shipping_id.name">
+                        <span t-field="o.partner_shipping_id.name"/>
+                    </div>
+
+                    <div>
+                        <span t-field="o.partner_shipping_id.street"/>
+                        <t t-if="o.partner_shipping_id.street2">
+                            ,
+                            <span t-field="o.partner_shipping_id.street2"/>
+                        </t>
+                    </div>
+
+                    <div>
+                        <span t-field="o.partner_shipping_id.city"/>
+                        <t t-if="o.partner_shipping_id.state_id">
+                            ,
+                            <span t-field="o.partner_shipping_id.state_id"/>
+                        </t>
+                        <t t-if="o.partner_shipping_id.zip">
+                            -
+                            <span t-field="o.partner_shipping_id.zip"/>
+                        </t>
+                    </div>
+
+                    <div t-if="o.partner_shipping_id.country_id">
+                        <span t-field="o.partner_shipping_id.country_id"/>
+                    </div>
+
+                    <div t-if="o.partner_shipping_id.phone">
+                        <span t-field="o.partner_shipping_id.phone"/>
+                    </div>
+
+                    <div t-if="o.partner_shipping_id.email">
+                        <span t-field="o.partner_shipping_id.email"/>
+                    </div>
+
+                    <div t-if="o.x_studio_buildingfloorroom_1">
+                        <span t-field="o.x_studio_buildingfloorroom_1"/>
+                    </div>
                 </div>
 
             </div>
