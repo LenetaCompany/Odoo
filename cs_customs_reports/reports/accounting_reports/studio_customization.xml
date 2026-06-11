@@ -404,7 +404,9 @@
                             <span t-field="o.partner_id.street2"/>
                         </t>
                     </div>
-
+                    <div t-if="o.partner_id.x_studio_building_floor">
+                        <span t-field="o.partner_id.x_studio_building_floor"/>
+                    </div>
                     <div>
                         <span t-field="o.partner_id.city"/>
                         <t t-if="o.partner_id.state_id">
@@ -429,9 +431,7 @@
                         <span t-field="o.partner_id.email"/>
                     </div>
 
-                    <div t-if="o.partner_id.x_studio_building_floor">
-                        <span t-field="o.partner_id.x_studio_building_floor"/>
-                    </div>
+
                 </div>
 
                 <!-- SHIP TO -->
@@ -452,7 +452,9 @@
                             <span t-field="o.partner_shipping_id.street2"/>
                         </t>
                     </div>
-
+                     <div t-if="o.x_studio_buildingfloorroom_1">
+                        <span t-field="o.x_studio_buildingfloorroom_1"/>
+                    </div>
                     <div>
                         <span t-field="o.partner_shipping_id.city"/>
                         <t t-if="o.partner_shipping_id.state_id">
@@ -477,9 +479,7 @@
                         <span t-field="o.partner_shipping_id.email"/>
                     </div>
 
-                    <div t-if="o.x_studio_buildingfloorroom_1">
-                        <span t-field="o.x_studio_buildingfloorroom_1"/>
-                    </div>
+
                 </div>
 
             </div>
