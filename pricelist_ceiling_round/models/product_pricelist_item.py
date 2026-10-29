@@ -2,7 +2,7 @@
 # from decimal import Decimal
 # from odoo import api, fields, models
 
-from decimal import Decimal, ROUND_UP
+from decimal import Decimal, ROUND_DOWN, ROUND_UP
 from odoo import models
 
 
@@ -18,6 +18,7 @@ class SaleOrderLine(models.Model):
 
         price = line._get_display_price()
 
+
         product_taxes = line.product_id.taxes_id._filter_taxes_by_company(
             line.company_id
         )
@@ -28,21 +29,70 @@ class SaleOrderLine(models.Model):
             fiscal_position=line.order_id.fiscal_position_id,
         )
 
-        # Custom rounding:
-        # 2 or fewer decimals -> unchanged
-        # 3rd decimal > 0     -> round UP to 2 decimals
-        price_unit = float(
-            Decimal(str(price_unit)).quantize(
+        price_decimal = Decimal(str(price_unit))
+
+        # Get the value at 2 decimal places without rounding up
+        price_2 = price_decimal.quantize(
+            Decimal('0.01'),
+            rounding=ROUND_DOWN
+        )
+
+        # Calculate what remains after 2 decimal places
+        remainder = price_decimal - price_2
+
+        # If there is a meaningful amount after 2 decimals,
+        # round up to the next 0.01.
+        #
+        # 63.650000000000006 -> remainder is only floating-point noise
+        # 63.651              -> remainder is 0.001
+        if remainder > Decimal('0.000001'):
+            price_decimal = price_decimal.quantize(
                 Decimal('0.01'),
                 rounding=ROUND_UP
             )
-        )
+        else:
+            price_decimal = price_2
+
+        price_unit = float(price_decimal)
 
         line.update({
             'price_unit': price_unit,
             'technical_price_unit': price_unit,
         })
-########
+
+################# working code ###############################
+    # def _reset_price_unit(self):
+    #     self.ensure_one()
+    #
+    #     line = self.with_company(self.company_id)
+    #
+    #     price = line._get_display_price()
+    #
+    #     product_taxes = line.product_id.taxes_id._filter_taxes_by_company(
+    #         line.company_id
+    #     )
+    #
+    #     price_unit = line.product_id._get_tax_included_unit_price_from_price(
+    #         price,
+    #         product_taxes=product_taxes,
+    #         fiscal_position=line.order_id.fiscal_position_id,
+    #     )
+    #
+    #     # Custom rounding:
+    #     # 2 or fewer decimals -> unchanged
+    #     # 3rd decimal > 0     -> round UP to 2 decimals
+    #     price_unit = float(
+    #         Decimal(str(price_unit)).quantize(
+    #             Decimal('0.01'),
+    #             rounding=ROUND_UP
+    #         )
+    #     )
+    #
+    #     line.update({
+    #         'price_unit': price_unit,
+    #         'technical_price_unit': price_unit,
+    #     })
+######## old #############################
     # def _reset_price_unit(self):
     #     self.ensure_one()
     #
